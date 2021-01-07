@@ -46,5 +46,18 @@ class Car():
     def current_board(self):
         self.tile_occupation = {}
 
+        for car in self.cars:
+            for tile in car.tiles:
+                self.tile_occupation[tile] = car.id
+        
         for tile in self.tiles:
-            self.tile_occupation[tile]
+                
+            if self.tile_occupation[tile]:
+                print(self.tile_occupation[tile])
+            else:
+                print("_")
+
+            if tile.id % self.dimension == 0:
+                print("\n")
+
+                
