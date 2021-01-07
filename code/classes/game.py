@@ -17,7 +17,10 @@ class Game:
         """
         Load cars from file
         """
-        pass
+        with open(board_file) as f:
+            for line in f:
+                car_line = f.readline().split(",")
+                self.cars[car_line[0]] = Car(*car_line)
 
     def load_tiles(self, dimension):
         """
