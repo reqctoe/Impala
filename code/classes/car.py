@@ -12,7 +12,7 @@ class Car():
 
 
     def occupies_tiles(self, dimension, tiles):
-        tile_ID = int((self.row - 1) * 6 * dimension + self.col)
+        tile_ID = int((self.row - 1) * dimension + self.col)
         car_tiles = [tile_ID]
         if self.orientation == "H":
             car_tiles.append(int(tile_ID + 1))
@@ -27,36 +27,24 @@ class Car():
             self.tiles.append(tiles[tile])
             tiles[tile].set_occupied()
 
-    def update_position
-    
-    
-    
-    # def occupies_tiles(self, dimension):
-    #     tile = 1
-    #     while True:
-    #         if tile == 1:
-    #             ID = int((self.row - 1) * 6 * dimension + self.col)
-    #             row = self.row
-    #             col = self.col
-    #             tile += 1
-    #         elif tile == 2:
-    #             if self.orientation == 'H':
-    #                 ID += 1
-    #                 col += 1
-    #             else:
-    #                 ID += dimension
-    #                 row += 1
-    #             tile += 1
-    #         elif tile == 3:
-    #             if self.length == 3:
-    #                 if self.orientation == 'H':
-    #                     ID += 1
-    #                     col += 1
-    #                 else:
-    #                     ID += dimension
-    #                     row += 1
-    #             else:
-    #                 break
+    def update_position(self, move):
+        if self.orientation == "H":
+            self.col += move
+        else:
+            self.row += move
 
-    #         tile = [ID, row, col]
-    #         self.tiles.append(Tile(*tile))
+
+    # in game.py
+    def game_won(self):
+        win_tile = (ceil(dimension / 2) - 1) * dimension + dimension
+        self.winning_tile = self.tiles[win_tile]
+
+        if self.winning_tile in self.cars[X].tiles:
+            return True
+        return False
+
+    def current_board(self):
+        self.tile_occupation = {}
+
+        for tile in self.tiles:
+            self.tile_occupation[tile]
