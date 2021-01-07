@@ -22,11 +22,17 @@ class Game:
                 car_line = f.readline().split(",")
                 self.cars[car_line[0]] = Car(*car_line)
 
-    def load_tiles(self, dimension):
+    def load_tiles(self, data, board_size):
         """
-        Load tiles
+            Load tiles
         """
-        pass
+
+        # add all tiles with occupied to false
+        for row in board_size:
+            for col in board_size:
+                id = ((row - 1) * board_size) + col
+                new_tile = Tile(id, row, col)
+                self.tiles[new_tile.id] = new_tile
 
     def current_board(self):
         pass

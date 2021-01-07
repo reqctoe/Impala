@@ -26,17 +26,3 @@ class Tile:
 
 
 
-    # DEZE IS VOOR IN DE GAME CLASS
-    def load_tiles(self, data, board_size):
-
-        self.tiles = {}
-        
-        # add all tiles with occupied to false
-        for row in board_size:
-            for col in board_size:
-                id = ((row - 1) * board_size) + col
-                new_tile = Tile(id, row, col)
-                self.tiles[new_tile.id] = new_tile
-
-
-
