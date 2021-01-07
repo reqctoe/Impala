@@ -13,16 +13,7 @@ class Game:
         self.load_tiles(dimension)
         self.load_cars(board_file)
 
-    def load_cars(self, board_file, dimension):
-        """
-        Load cars from file
-        """
-        with open(board_file) as f:
-            for line in f:
-                car_line = f.readline().split(",")
-                self.cars[car_line[0]] = Car(*car_line)
-
-    def load_tiles(self, data, board_size):
+    def load_tiles(self, board_size):
         """
             Load tiles
         """
@@ -33,6 +24,15 @@ class Game:
                 id = ((row - 1) * board_size) + col
                 new_tile = Tile(id, row, col)
                 self.tiles[new_tile.id] = new_tile
+
+    def load_cars(self, board_file, dimension):
+        """
+        Load cars from file
+        """
+        with open(board_file) as f:
+            for line in f:
+                car_line = f.readline().split(",")
+                self.cars[car_line[0]] = Car(*car_line)
 
     def current_board(self):
         pass
