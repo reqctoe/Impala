@@ -38,17 +38,5 @@ class Tile:
                 new_tile = Tile(id, row, col)
                 self.tiles[new_tile.id] = new_tile
 
-        # set tiles that have a car on them as occupied
-        with open(FILE, "r") as data: # HIER EVEN DE GOEIE FILENAAM TOEVOEGEN IN DE GAME CLASS
-            data_dict = DictReader(data)
 
-        for car in data_dict:
-            # set first tile to occupied
-            id = ((car[row] - 1) * board_size) + car[col]   # hier wordt ervan uitgegaan dat de header van de file klopt
-            tile = self.tiles[id]
-            tile.occupied = True
-
-            # TODO set second tile to occupied
-
-            # TODO if length is 3 set 3rd tile to occupied
 
