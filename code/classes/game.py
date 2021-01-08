@@ -56,8 +56,9 @@ class Game():
             else:
                 self.board.append("_")
 
-            if tile.id % self.dimension == 0:
+            if tile.id % self.board_size == 0:
                 self.board.append("\n")
+
 
     def valid_move(self, car_id, move):
         """
