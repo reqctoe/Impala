@@ -1,54 +1,42 @@
 from .tile import Tile
 
-
 class Car():
     
     def __init__(self, car_ID, orientation, col, row, length):
         self.id = car_ID
         self.orientation = orientation
-        self.row = row
-        self.col = col
-        self.length = length
+        self.row = int(row)
+        self.col = int(col)
+        self.length = int(length)
         self.tiles = []
 
+        # print(self.length)
 
-    def occupies_tiles(self, dimension, tiles):
+    def occupies_tiles(self, dimension):
         tile_ID = int((self.row - 1) * dimension + self.col)
-        car_tiles = [tile_ID]
+        self.tiles.append(tile_ID)
         if self.orientation == "H":
-            car_tiles.append(int(tile_ID + 1))
+            self.tiles.append(int(tile_ID + 1))
             if self.length == 3:
-                car_tiles.append(int(tile_ID + 2))
+                # print("hey!")
+                self.tiles.append(int(tile_ID + 2))
         else:
-            car_tiles.append(int(tile_ID + dimension))
+            self.tiles.append(int(tile_ID + dimension))
             if self.length == 3:
-                car_tiles.append(int(tile_ID + 2 * dimension))
-        
-        for tile in car_tiles:
-            self.tiles.append(tiles[tile])
-            tiles[tile].set_occupied()
+                self.tiles.append(int(tile_ID + 2 * dimension))
 
-    def update_position(self, move):
+        # print("wu")
+
+    def occupation(self, tiles):
+        for tile in self.tiles:
+            # print(tile)
+            # print(tiles)
+            tiles[tile].set_occupied()
+    
+    def update_position(self, move, dimension):
         if self.orientation == "H":
             self.col += move
         else:
             self.row += move
 
-
-
-    # def current_board(self):
-    #     self.tile_occupation = {}
-
-    #     for car in self.cars:
-    #         for tile in car.tiles:
-    #             self.tile_occupation[tile] = car.id
-        
-    #     for tile in self.tiles:
-                
-    #         if self.tile_occupation[tile]:
-    #             print(self.tile_occupation[tile])
-    #         else:
-    #             print("_")
-
-    #         if tile.id % self.dimension == 0:
-    #             print("\n")
+        self.occupies_tiles(dimension)

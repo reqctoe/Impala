@@ -27,6 +27,8 @@ if __name__ == "__main__":
 
     print("Enter a move in the folowing format:\n[car_id],[move]\n" +
             "when you want to move left or up, enter a negative number.")
+
+    print(game.give_board())
     
     # prompt user for commands
     while True:
@@ -36,7 +38,7 @@ if __name__ == "__main__":
             print("Invalid command. Enter a move in the folowing format:\n[car_id],[move]")
             continue
 
-        command = command.split()
+        command = command.split(",")
 
         # check if move is valid
         if not game.valid_move(*command):

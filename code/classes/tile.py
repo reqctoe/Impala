@@ -10,7 +10,7 @@ class Tile:
         self.id = id
         self.row = row
         self.col = col
-        self.ocupied = False
+        self.occupied = False
     
     def set_occupied(self):
         """Sets the tiles occupied variable to True."""
