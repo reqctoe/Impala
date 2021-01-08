@@ -4,7 +4,7 @@ from .car import Car
 from math import ceil
 
 class Game():
-    def __init__(self, board_size, board_file):
+    def __init__(self, board_size, game_number):
 
         self.board_size = int(board_size)
         self.tile_occupation = {}
@@ -17,6 +17,7 @@ class Game():
 
         # load cars and tiles
         self.load_tiles()
+        board_file = f"..data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv" # KLOPT DE RELATIVE PATH HIERVAN?
         self.load_cars(board_file)
 
         # set winning tile
