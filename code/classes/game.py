@@ -1,5 +1,5 @@
-from tile import Tile
-from car import Car
+from .tile import Tile
+from .car import Car
 
 from math import ceil
 
@@ -56,7 +56,7 @@ class Game():
             else:
                 print("_")
 
-            if tile.id % self.dimension == 0:
+            if tile.id % self.board_size == 0:
                 print("\n")
 
     def valid_move(self, car_id, move):
