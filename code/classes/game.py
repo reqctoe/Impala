@@ -6,7 +6,9 @@ from math import ceil
 class Game():
     def __init__(self, board_size, board_file):
 
-        self.board_size = board_size
+        self.board_size = int(board_size)
+        self.tile_occupation = {}
+        self.board = ""
 
         # tiles is a dictionary that maps a tile number to the corresponding tile object
         self.tiles = {}
@@ -27,8 +29,8 @@ class Game():
         """
 
         # add all tiles with occupied to false
-        for row in self.board_size:
-            for col in self.board_size:
+        for row in range(self.board_size):
+            for col in range(self.board_size):
                 id = ((row - 1) * self.board_size) + col
                 new_tile = Tile(id, row, col)
                 self.tiles[new_tile.id] = new_tile
@@ -43,21 +45,20 @@ class Game():
                 self.cars[car_line[0]] = Car(*car_line)
 
     def current_board(self):
-        self.tile_occupation = {}
 
         for car in self.cars:
             for tile in car.tiles:
                 self.tile_occupation[tile] = car.id
-        
+
         for tile in self.tiles:
-                
             if self.tile_occupation[tile]:
-                print(self.tile_occupation[tile])
+                self.board.append(self.tile_occupation[tile])
             else:
-                print("_")
+                self.board.append("_")
 
             if tile.id % self.board_size == 0:
-                print("\n")
+                self.board.append("\n")
+
 
     def valid_move(self, car_id, move):
         """
@@ -69,29 +70,31 @@ class Game():
         # if the car's orientation is horizontal, only look through its row 
         if car.orientation == 'H':
             # check if you don't move through walls
-            if 1 > car.row + move >= self.board_size:
+            if 1 > car.col + move or car.col + car.length - 1 + move > self.board_size:
                 return False
 
             # TODO: ook werkend krijgen voor negatieve bewegingen
+            if move < 0:
+                for i in range(move, car.row - 1):
+                    if self.tiles[((car.row - 1) * self.board_size + car.col) + i].occupied:
+                        return False
             # check if you don't move through cars
-            for i in range(1, move+1):
-                if self.tiles[((car.row - 1) * self.board_size) + i].occupied:
+            for i in range(car.length, move + car.length - 1):
+                if self.tiles[((car.row - 1) * self.board_size + car.col) + i].occupied:
                     return False
         # if it is vertical, only look through its column
-        else:
-            if 1 > car.col + move > self.board_size:
+        if 1 > car.row + move or car.row + car.length - 1 + move > self.board_size:
+            return False
+        
+        if move < 0:
+                for i in range(move, car.col - 1):
+                    if self.tiles[((car.row + i - 1) * self.board_size) + car.col].occupied == False:
+                        return False
+        for i in range(car.length, move + car.length - 1):
+            if self.tiles[((car.row + i - 1) * self.board_size) + car.col].occupied == False:
                 return False
-            for i in range(1, move+1):
-                if self.tiles[((i - 1) * self.board_size) + car.col].occupied == False:
-                    return False
         
         return True
-
-        # # if the orenientation of the car is horizontal, check if the move is in the same row
-        # if car.orientation == 'H' & :
-        #     return 
-        # # if the orientation is vertical, check if the move is in the same column
-        # elif car.orientation == 'V':
 
     def move(self, car, move):
         """
@@ -100,6 +103,7 @@ class Game():
         # set current tiles to unoccupied
         for tile in self.cars[car.id].tiles:
             tile.set_unoccupied()
+            self.board[tile.id % self.board_size + tile.id] = "_"
 
         # set new position car 
         self.cars[car.id].update_position(move)
@@ -107,6 +111,10 @@ class Game():
         # set tiles to occupied 
         for tile in self.cars[car.id].tiles:
             tile.set_occupied()
+            self.board[tile.id % self.board_size + tile.id] = car.id
+
+    def give_board(self):
+        return self.board
 
     def game_won(self):
         """
