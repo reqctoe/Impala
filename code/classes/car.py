@@ -34,28 +34,20 @@ class Car():
             self.row += move
 
 
-    # in game.py
-    def game_won(self):
-        win_tile = (ceil(dimension / 2) - 1) * dimension + dimension
-        self.winning_tile = self.tiles[win_tile]
 
-        if self.winning_tile in self.cars[X].tiles:
-            return True
-        return False
+    # def current_board(self):
+    #     self.tile_occupation = {}
 
-    def current_board(self):
-        self.tile_occupation = {}
-
-        for car in self.cars:
-            for tile in car.tiles:
-                self.tile_occupation[tile] = car.id
+    #     for car in self.cars:
+    #         for tile in car.tiles:
+    #             self.tile_occupation[tile] = car.id
         
-        for tile in self.tiles:
+    #     for tile in self.tiles:
                 
-            if self.tile_occupation[tile]:
-                print(self.tile_occupation[tile])
-            else:
-                print("_")
+    #         if self.tile_occupation[tile]:
+    #             print(self.tile_occupation[tile])
+    #         else:
+    #             print("_")
 
-            if tile.id % self.dimension == 0:
-                print("\n")
+    #         if tile.id % self.dimension == 0:
+    #             print("\n")

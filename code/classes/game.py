@@ -18,7 +18,7 @@ class Game():
         self.load_cars(board_file)
 
         # set winning tile
-        win_tile = (ceil(self.board_size / 2) - 1) * self.board_size + self.board_size
+        win_tile = ceil(self.board_size / 2) * self.board_size
         self.winning_tile = self.tiles[win_tile]
 
     def load_tiles(self):
@@ -43,7 +43,21 @@ class Game():
                 self.cars[car_line[0]] = Car(*car_line)
 
     def current_board(self):
-        pass
+        self.tile_occupation = {}
+
+        for car in self.cars:
+            for tile in car.tiles:
+                self.tile_occupation[tile] = car.id
+        
+        for tile in self.tiles:
+                
+            if self.tile_occupation[tile]:
+                print(self.tile_occupation[tile])
+            else:
+                print("_")
+
+            if tile.id % self.dimension == 0:
+                print("\n")
 
     def valid_move(self, car_id, move):
         """
