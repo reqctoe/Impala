@@ -59,5 +59,3 @@ class Car():
 
             if tile.id % self.dimension == 0:
                 print("\n")
-
-                

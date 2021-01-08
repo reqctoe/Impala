@@ -1,6 +1,4 @@
 
-# DIT MOET WORDEN GEINPORT VOOR DE GAME CLASS
-from csv import DictReader
 
 class Tile:
     """This class is used to create tiles for the Rush Hour board.
