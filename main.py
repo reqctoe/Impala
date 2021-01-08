@@ -8,17 +8,26 @@ if __name__ == "__main__":
 
     # check if command lina arguments are given
     if len(argv) != 3:
-        print("Usage: python main.py [game_data] [board_dimention]")
+        print("Usage: python main.py [game_number] [board_dimention]")
         exit(1)
     
+    # check game number
+    if int(argv[1]) not in range(7):
+        print("Invalid game number")
+        exit(1)
+
     # check board dimension
-    if argv[2] not in [6, 9, 12]:
+    if int(argv[2]) not in [6, 9, 12]:
         print("Invalid board dimension")
         exit(1)
 
     # load game
-    game_data, board_dimension = argv[1], argv[2]
-    game = Game(board_dimension, game_data)
+    game_number, board_dimension = argv[1], argv[2]
+    game = Game(board_dimension, game_number)
+
+    #VOOR IN DE GAME CLASS
+    game_file = f"Rushhour{board_dimension}x{board_dimension}_{game_number}.csv"
+    #IN DE GAME CLASS MOET DUS OOK NOG EVEN DE FILE GEOPEND WORDEN
 
     print("Enter a move in the folowing format:\n[car_id],[move]\n" +
             "when you want to move left or up, enter a negative number.")
@@ -40,7 +49,7 @@ if __name__ == "__main__":
 
         # perform move an print current board
         game.move(*command)
-        game.current_board()
+        print(game.give_board())
 
         # exit when game is won
         if game.game_won():
