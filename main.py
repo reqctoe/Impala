@@ -12,7 +12,7 @@ if __name__ == "__main__":
         exit(1)
     
     # check board dimension
-    if argv[2] not in [6, 9, 12]:
+    if int(argv[2]) not in [6, 9, 12]:
         print("Invalid board dimension")
         exit(1)
 
@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
         # perform move an print current board
         game.move(*command)
-        game.current_board()
+        print(game.give_board())
 
         # exit when game is won
         if game.game_won():
