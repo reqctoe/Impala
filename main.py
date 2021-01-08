@@ -1,6 +1,6 @@
 
 
-from code.classes import game # dit werkt niet...
+from code.classes.game import Game # dit werkt niet...
 
 from sys import argv
 
