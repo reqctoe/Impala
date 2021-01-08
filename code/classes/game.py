@@ -1,14 +1,14 @@
 from .tile import Tile
 from .car import Car
 
-from math import ceil
+from math import ceil, floor
 
 class Game():
     def __init__(self, board_size, game_number):
 
         self.board_size = int(board_size)
         self.tile_occupation = {}
-        self.board = ""
+        self.board = []
 
         # tiles is a dictionary that maps a tile number to the corresponding tile object
         self.tiles = {}
@@ -22,7 +22,6 @@ class Game():
 
 
         # load board
-        
         self.current_board()
 
         # set winning tile
@@ -66,12 +65,12 @@ class Game():
 
         for tile in self.tiles:
             if tile in self.tile_occupation:
-                self.board += self.tile_occupation[tile]
+                self.board.append(self.tile_occupation[tile])
             else:
-                self.board += "_"
+                self.board.append("_")
 
             if self.tiles[tile].id % self.board_size == 0:
-                self.board += "\n"
+                self.board.append("\n")
 
 
     def valid_move(self, car_id, move):
@@ -124,8 +123,9 @@ class Game():
         # set current tiles to unoccupied
         for tile in self.cars[car_id].tiles:
             self.tiles[tile].set_unoccupied()
-            tile_car = self.board[tile % self.board_size + tile]
-            tile_car.replace(tile_car, "_")
+            # tile_car = 
+            self.board[floor(tile / self.board_size) - 1 + tile] = "_"
+            # tile_car.replace(tile_car, "_")
 
         # set new position car 
         self.cars[car_id].update_position(move, self.board_size)
@@ -133,13 +133,13 @@ class Game():
         # set tiles to occupied 
         for tile in self.cars[car_id].tiles:
             self.tiles[tile].set_occupied()
-            print(self.board[tile % self.board_size + tile].replace("_", car_id))
+            self.board[floor(tile / self.board_size) - 1 + tile] = car_id
+            print(self.tiles[tile].id, self.tiles[tile].occupied)
 
         # print(self.board)
 
     def give_board(self):
-        # print("ghello")
-        return self.board
+        return " ".join(self.board)
 
     def game_won(self):
         """
