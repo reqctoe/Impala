@@ -60,16 +60,19 @@ class Game():
 
         for car in self.cars:
             for tile in self.cars[car].tiles:
-                self.tile_occupation[tile] = self.cars[car].id
+                if len(self.cars[car].id) == 2:
+                    self.tile_occupation[tile] = self.cars[car].id + " "
+                else:
+                    self.tile_occupation[tile] = self.cars[car].id + "  "
 
         for tile in self.tiles:
             if tile in self.tile_occupation:
                 self.board.append(self.tile_occupation[tile])
             else:
-                self.board.append("_")
+                self.board.append("_  ")
 
             if self.tiles[tile].id % self.board_size == 0:
-                self.board.append("\n")
+                self.board.append("\n\n")
 
 
     def valid_move(self, car_id, move):
