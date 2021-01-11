@@ -25,8 +25,7 @@ class Game():
         self.current_board()
 
         # set winning tile
-        win_tile = floor(self.board_size / 2) * self.board_size
-        self.winning_tile = self.tiles[win_tile]
+        self.winning_tile = floor(self.board_size / 2) * self.board_size
 
     def load_tiles(self):
         """
@@ -146,40 +145,6 @@ class Game():
                         return False
 
         return True
-        # # check if you don't move through any cars or walls, return false if you do
-        # # if the car's orientation is horizontal, only look through its row 
-        # if car.orientation == 'H':
-        #     # check if you don't move through walls
-        #     if 1 > car.col + move or car.col + car.length - 1 + move > self.board_size:
-        #         print("muur1")
-        #         return False
-
-        #     # TODO: ook werkend krijgen voor negatieve bewegingen
-        #     if move < 0:
-        #         for i in range(move, car.row - 1):
-        #             if self.tiles[((car.row - 1) * self.board_size + car.col) + i].occupied:
-        #                 print("auto1")
-        #                 return False
-        #     # check if you don't move through cars
-        #     for i in range(car.length, move + car.length - 1):
-        #         if self.tiles[((car.row - 1) * self.board_size + car.col) + i].occupied:
-        #             print("auto2")
-        #             return False
-        # # if it is vertical, only look through its column
-        # else:
-        #     if 1 > car.row + move or car.row + car.length - 1 + move > self.board_size:
-        #         print("muur2")
-        #         return False
-        
-        #     if move < 0:
-        #             for i in range(move, car.col - 1):
-        #                 if self.tiles[((car.row + i - 1) * self.board_size) + car.col].occupied == False:
-        #                     return False
-        #     for i in range(car.length, move + car.length - 1):
-        #         if self.tiles[((car.row + i - 1) * self.board_size) + car.col].occupied == False:
-        #             return False
-        
-        # return True
 
     def move(self, car_id, move):
         """
