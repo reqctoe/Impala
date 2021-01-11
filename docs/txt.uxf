@@ -1,28 +1,36 @@
-<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>195</x><y>90</y><w>100</w><h>140</h></coordinates><panel_attributes>Board
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>475</x><y>250</y><w>270</w><h>180</h></coordinates><panel_attributes>Car
 --
-size: Int
-
---
-methods</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>525</x><y>90</y><w>100</w><h>140</h></coordinates><panel_attributes>Car
---
-orientation: string
+id: String
+orientation: String
 row: Int
 col: Int
 length: Int
+tiles: List
+--
+occupies_tiles(self, dimension): None
+occupation(self, tiles): None
+update_position(self, move, dimension): None</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>265</x><y>250</y><w>160</w><h>140</h></coordinates><panel_attributes>Tile
+--
 id: Int
---
-methods</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>365</x><y>90</y><w>100</w><h>140</h></coordinates><panel_attributes>Tile
---
 row: Int
 col: Int
 occupied: Bool
 --
-methods
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>50</x><y>90</y><w>100</w><h>140</h></coordinates><panel_attributes>Game
+set_occupied(self): None
+set_unoccupied(self): None
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>250</y><w>210</w><h>240</h></coordinates><panel_attributes>Game
 --
-won: Bool???
+board_size: Int
+tiles: Dict
+cars: Dict
+tile_ocupation: Dict
+board: List
+winning_tile: Int
 --
-current_board: ?
-valid_move
-move
-game_won</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>90</y><w>90</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>460</x><y>90</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element></diagram>
+load_tiles(self): None
+load_cars(self): None
+current_board(self): None
+valid_move(self, car_id, move): Bool
+move(self, car_id, move): None
+give_board(self): String
+game_won(self): Bool</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>250</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>240</y><w>80</w><h>40</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;20;55;10</additional_attributes></element></diagram>
