@@ -10,8 +10,6 @@ class Car():
         self.length = int(length)
         self.tiles = []
 
-        # print(self.length)
-
     def occupies_tiles(self, dimension):
         self.tiles.clear()
         tile_ID = int((self.row - 1) * dimension + self.col)
@@ -25,22 +23,15 @@ class Car():
             if self.length == 3:
                 self.tiles.append(int(tile_ID + 2 * dimension))
 
-        # print("wu")
 
     def occupation(self, tiles):
-        print(self.tiles)
         for tile in self.tiles:
             tiles[tile].set_occupied()
-            # print(tile)
-        for tile in tiles:
-            print(tiles[tile].occupied)
     
     def update_position(self, move, dimension):
         if self.orientation == "H":
             self.col += move
         else:
             self.row += move
-
-        print(self.row, self.col)
 
         self.occupies_tiles(dimension)

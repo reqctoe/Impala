@@ -25,7 +25,7 @@ class Game():
         self.current_board()
 
         # set winning tile
-        win_tile = ceil(self.board_size / 2) * self.board_size
+        win_tile = floor(self.board_size / 2) * self.board_size
         self.winning_tile = self.tiles[win_tile]
 
     def load_tiles(self):
@@ -88,7 +88,7 @@ class Game():
                 print("left")
                 return False
             # right wall
-            if car.col + car.length - 1 + move > self.board_size:
+            elif car.col + car.length - 1 + move > self.board_size:
                 print("right")
                 return False
 
@@ -97,20 +97,21 @@ class Game():
                 if self.tiles[car.col - 1 + comp].occupied:
                     print("-1 car")
                     return False
-            for tile in range(car.col + move + comp, car.col - 1 + comp):
-                print("ding")
-                if self.tiles[tile].occupied:
-                    print("car left")
-                    return False
+            else:
+                for tile in range(car.col + move + comp, car.col + comp):
+                    if self.tiles[tile].occupied:
+                        print("car left")
+                        return False
             # car right
             if move == 1:
                 if self.tiles[car.col + car.length + comp].occupied:
                     print("+1 car")
                     return False
-            for tile in range(car.col + car.length + comp, car.col + car.length - 1 + move + comp):
-                if self.tiles[tile].occupied:
-                    print("car right")
-                    return False
+            else:
+                for tile in range(car.col + car.length + comp, car.col + car.length + move + comp):
+                    if self.tiles[tile].occupied:
+                        print("car right")
+                        return False
                 
         else:
             # top wall
@@ -118,28 +119,31 @@ class Game():
                 print("top")
                 return False
             # bottom wall
-            if car.row + car.length - 1 + move > self.board_size:
+            elif car.row + car.length - 1 + move > self.board_size:
                 print("bottom")
                 return False
             
             # car top
             if move == -1:
-                if self.tiles[car.row - 1].occupied:
+                if self.tiles[car.col + comp - self.board_size].occupied:
                     print("-1 car")
+                    print(self.tiles[car.row - self.board_size + comp].id)
                     return False
-            for tile in range(car.row + move, car.row - 1):
-                if self.tiles[tile].occupied:
-                    print("car top")
-                    return False
+            else:
+                for tile in range(car.col + comp + move * self.board_size, car.col + comp, self.board_size):
+                    if self.tiles[tile].occupied:
+                        print("car top")
+                        return False
             # car bottom
             if move == 1:
-                if self.tiles[car.row + car.length].occupied:
+                if self.tiles[car.col + comp + car.length * self.board_size].occupied:
                     print("+1 car")
                     return False
-            for tile in range(car.row + car.length, car.row + car.length - 1 + move):
-                if self.tiles[tile].occupied:
-                    print("car bottom")
-                    return False
+            else:
+                for tile in range(car.col + comp + car.length * self.board_size, car.col + comp + (car.length + move) * self.board_size, self.board_size):
+                    if self.tiles[tile].occupied:
+                        print("car bottom")
+                        return False
 
         return True
         # # check if you don't move through any cars or walls, return false if you do
@@ -185,7 +189,6 @@ class Game():
         # set current tiles to unoccupied
         for tile in self.cars[car_id].tiles:
             self.tiles[tile].set_unoccupied()
-            print(tile, self.tiles[tile].occupied)
             # tile_car = 
             self.board[floor((tile - 1) / self.board_size) - 1 + tile] = "_"
             # tile_car.replace(tile_car, "_")
@@ -197,7 +200,6 @@ class Game():
         for tile in self.cars[car_id].tiles:
             self.tiles[tile].set_occupied()
             self.board[floor((tile - 1)/ self.board_size) - 1 + tile] = car_id
-            print(self.tiles[tile].id, self.tiles[tile].occupied)
 
         # print(self.board)
 
