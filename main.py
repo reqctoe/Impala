@@ -1,7 +1,7 @@
 
 
 from code.algorithms.baseline_algorithm import Baseline
-from code.classes.game import Game 
+from code.classes.game import Game
 
 import csv
 from sys import argv
@@ -28,12 +28,13 @@ if __name__ == "__main__":
     game_number, board_size = argv[1], argv[2]
     game = Game(board_size, game_number)
 
-    # load algorythm
+    # load algorithm
     baseline = Baseline(board_size, game_number)
-
-    # initiate move registration and move counter
+    
+    # initiate move registration and move counters
     command_list = ""
     command_count = 0
+    valid_command_count = 0
 
     # initiate output file
     with open('data/output_files/output.csv', 'w', newline ='') as outputfile:
@@ -46,30 +47,33 @@ if __name__ == "__main__":
 
     print(" " + game.give_board())
     
-    # ask algorythm for imput
+    # ask algorithm for input
     while True:
         command_string = baseline.get_command()
         command_count += 1
         
         # check if move is valid
         command = command_string.split(",")
-
+        
         if not game.valid_move(*command):
             continue
+        # count valid move
+        valid_command_count += 1
         
         # update output string and perform move
         command_list += f"{command_string}\n"
         game.move(*command)
-
+       
         # exit when game is won
         if game.game_won():
-            # print final gameboard state and total number of imput moves
+            # print final gameboard state and total number of input and valid moves
             print(" "+game.give_board())
             print(command_count)
+            print(valid_command_count)
             print("Congratulations, you have won the game!")
 
             # write all valid moves to output file
-            with open('data/output_files/output.csv', 'a') as outputfile:
+            with open('data/output_files/output.csv', 'a') as ou
                 outputfile.write(command_list)
 
             exit(0)
