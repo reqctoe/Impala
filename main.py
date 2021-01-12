@@ -1,32 +1,37 @@
 
 
-from code.classes.game import Game 
 from code.algorithms.baseline_algorithm import Baseline
+from code.classes.game import Game 
 
 import csv
 from sys import argv
 
+
 if __name__ == "__main__":
 
-    # check if command lina arguments are given
+    # check if command line arguments are given
     if len(argv) != 3:
-        print("Usage: python main.py [game_number] [board_dimention]")
+        print("Usage: python main.py [game_number] [board_size]")
         exit(1)
     
     # check game number
-    if int(argv[1]) not in range(8):
+    if int(argv[1]) not in range(1, 8):
         print("Invalid game number")
         exit(1)
 
-    # check board dimension
+    # check board size
     if int(argv[2]) not in [6, 9, 12]:
-        print("Invalid board dimension")
+        print("Invalid board size")
         exit(1)
 
     # load game
-    game_number, board_dimension = argv[1], argv[2]
-    game = Game(board_dimension, game_number)
-    baseline = Baseline(board_dimension, game_number)
+    game_number, board_size = argv[1], argv[2]
+    game = Game(board_size, game_number)
+
+    # load algorythm
+    baseline = Baseline(board_size, game_number)
+
+    # initiate move registration and move counter
     command_list = ""
     command_count = 0
 
@@ -35,42 +40,37 @@ if __name__ == "__main__":
         writer = csv.writer(outputfile)
         writer.writerow(["car", "move"])
         
-
+    # print welcome message and initial game board
     print("Enter a move in the folowing format:\n[car_id],[move]\n" +
             "when you want to move left or up, enter a negative number.")
 
-    print(" "+game.give_board())
+    print(" " + game.give_board())
     
-    # prompt user for commands
+    # ask algorythm for imput
     while True:
         command_string = baseline.get_command()
         command_count += 1
-
-        # if "," not in command:
-        #     print("Invalid command. Enter a move in the folowing format:\n[car_id],[move]")
-        #     continue
-        
-        command = command_string.split(",")
         
         # check if move is valid
+        command = command_string.split(",")
+
         if not game.valid_move(*command):
-            # print("Invalid move")
             continue
         
+        # update output string and perform move
         command_list += f"{command_string}\n"
-
-        # perform move an print current board
         game.move(*command)
-        # print(" "+game.give_board())
 
         # exit when game is won
         if game.game_won():
+            # print final gameboard state and total number of imput moves
             print(" "+game.give_board())
             print(command_count)
             print("Congratulations, you have won the game!")
+
+            # write all valid moves to output file
             with open('data/output_files/output.csv', 'a') as outputfile:
-                # writer = csv.writer(outputfile)
-                # writer.writerow(command_list)
                 outputfile.write(command_list)
+
             exit(0)
         
