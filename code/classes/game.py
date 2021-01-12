@@ -9,7 +9,7 @@ class Game():
         
         self.board_size = int(board_size)
         # winning tile id        
-        self.winning_tile = floor(self.board_size / 2) * self.board_size
+        self.winning_tile = ceil(self.board_size / 2) * self.board_size
         # board occupation list
         self.board = []
         # map tile numbers to occupying car
