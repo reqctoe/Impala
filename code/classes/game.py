@@ -17,7 +17,7 @@ class Game():
 
         # load cars and tiles
         self.load_tiles()
-        board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv" # KLOPT DE RELATIVE PATH HIERVAN?
+        board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv" 
         self.load_cars(board_file)
 
 
@@ -87,64 +87,64 @@ class Game():
         if car.orientation == "H":
             # left wall
             if car.col + move < 1:
-                print("left")
+                # print("left")
                 return False
             # right wall
             elif car.col + car.length - 1 + move > self.board_size:
-                print("right")
+                # print("right")
                 return False
 
             # car left
             if move == -1:
                 if self.tiles[car.col - 1 + comp].occupied:
-                    print("-1 car")
+                    # print("-1 car")
                     return False
             else:
                 for tile in range(car.col + move + comp, car.col + comp):
                     if self.tiles[tile].occupied:
-                        print("car left")
+                        # print("car left")
                         return False
             # car right
             if move == 1:
                 if self.tiles[car.col + car.length + comp].occupied:
-                    print("+1 car")
+                    # print("+1 car")
                     return False
             else:
                 for tile in range(car.col + car.length + comp, car.col + car.length + move + comp):
                     if self.tiles[tile].occupied:
-                        print("car right")
+                        # print("car right")
                         return False
                 
         else:
             # top wall
             if car.row + move < 1:
-                print("top")
+                # print("top")
                 return False
             # bottom wall
             elif car.row + car.length - 1 + move > self.board_size:
-                print("bottom")
+                # print("bottom")
                 return False
             
             # car top
             if move == -1:
                 if self.tiles[car.col + comp - self.board_size].occupied:
-                    print("-1 car")
-                    print(self.tiles[car.row - self.board_size + comp].id)
+                    # print("-1 car")
+                    # print(self.tiles[car.row - self.board_size + comp].id)
                     return False
             else:
                 for tile in range(car.col + comp + move * self.board_size, car.col + comp, self.board_size):
                     if self.tiles[tile].occupied:
-                        print("car top")
+                        # print("car top")
                         return False
             # car bottom
             if move == 1:
                 if self.tiles[car.col + comp + car.length * self.board_size].occupied:
-                    print("+1 car")
+                    # print("+1 car")
                     return False
             else:
                 for tile in range(car.col + comp + car.length * self.board_size, car.col + comp + (car.length + move) * self.board_size, self.board_size):
                     if self.tiles[tile].occupied:
-                        print("car bottom")
+                        # print("car bottom")
                         return False
 
         return True

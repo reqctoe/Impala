@@ -1,14 +1,12 @@
-# from ..classes.car import Car
-
 from random import choice
 
 class Baseline():
 
     def __init__(self, board_size, game_number):
-        self.board_size = board_size
+        self.board_size = int(board_size)
         self.game_number = game_number
         self.cars = []
-        self.board_file = f"../../data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv"
+        self.board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv"
 
         self.load_cars(self.board_file)
 
@@ -24,9 +22,8 @@ class Baseline():
     def get_command(self):
         # pick random car
         car = choice(list(self.cars))
-        move = choice(range(-self.board_size,self.board_size + 1))
-        print(f"{car},{move}")
+        move = choice([-1,1])
+        return f"{car},{move}"
 
-baseline = Baseline(6,1)
-baseline.get_command()
+
 

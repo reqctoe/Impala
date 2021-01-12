@@ -1,6 +1,7 @@
 
 
-from code.classes.game import Game # dit werkt niet...
+from code.classes.game import Game 
+from code.algorithms.baseline_algorithm import Baseline
 
 import csv
 from sys import argv
@@ -25,6 +26,9 @@ if __name__ == "__main__":
     # load game
     game_number, board_dimension = argv[1], argv[2]
     game = Game(board_dimension, game_number)
+    baseline = Baseline(board_dimension, game_number)
+    command_list = ""
+    command_count = 0
 
     # initiate output file
     with open('data/output_files/output.csv', 'w', newline ='') as outputfile:
@@ -39,29 +43,34 @@ if __name__ == "__main__":
     
     # prompt user for commands
     while True:
-        command = input("> ").upper()
+        command_string = baseline.get_command()
+        command_count += 1
 
-        if "," not in command:
-            print("Invalid command. Enter a move in the folowing format:\n[car_id],[move]")
-            continue
+        # if "," not in command:
+        #     print("Invalid command. Enter a move in the folowing format:\n[car_id],[move]")
+        #     continue
         
-        command = command.split(",")
+        command = command_string.split(",")
+        
         # check if move is valid
         if not game.valid_move(*command):
-            print("Invalid move")
+            # print("Invalid move")
             continue
+        
+        command_list += f"{command_string}\n"
 
         # perform move an print current board
         game.move(*command)
-        print(" "+game.give_board())
-
-        # write the move to the output file
-        with open('data/output_files/output.csv', 'a') as outputfile:
-            writer = csv.writer(outputfile)
-            writer.writerow([*command])
+        # print(" "+game.give_board())
 
         # exit when game is won
         if game.game_won():
+            print(" "+game.give_board())
+            print(command_count)
             print("Congratulations, you have won the game!")
+            with open('data/output_files/output.csv', 'a') as outputfile:
+                # writer = csv.writer(outputfile)
+                # writer.writerow(command_list)
+                outputfile.write(command_list)
             exit(0)
         
