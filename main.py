@@ -1,5 +1,3 @@
-
-
 from code.algorithms.baseline_algorithm import Baseline
 from code.classes.game import Game 
 
