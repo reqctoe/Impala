@@ -29,5 +29,3 @@ class Baseline():
 baseline = Baseline(6,1)
 baseline.get_command()
 
-
-
