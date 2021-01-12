@@ -13,7 +13,7 @@ if __name__ == "__main__":
         exit(1)
     
     # check game number
-    if int(argv[1]) not in range(7):
+    if int(argv[1]) not in range(8):
         print("Invalid game number")
         exit(1)
 
@@ -44,9 +44,8 @@ if __name__ == "__main__":
         if "," not in command:
             print("Invalid command. Enter a move in the folowing format:\n[car_id],[move]")
             continue
-
+        
         command = command.split(",")
-
         # check if move is valid
         if not game.valid_move(*command):
             print("Invalid move")
