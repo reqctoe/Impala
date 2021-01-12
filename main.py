@@ -71,7 +71,7 @@ if __name__ == "__main__":
             print("Congratulations, you have won the game!")
 
             # write all valid moves to output file
-            with open('data/output_files/output.csv', 'a') as ou
+            with open('data/output_files/output.csv', 'a') as outputfile:
                 outputfile.write(command_list)
 
             exit(0)
