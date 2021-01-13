@@ -1,4 +1,6 @@
 from code.algorithms.baseline_algorithm import Baseline
+from code.algorithms.test_alg_1 import Test_alg_1
+
 from code.classes.game import Game
 
 import csv
@@ -27,7 +29,7 @@ if __name__ == "__main__":
     game = Game(board_size, game_number)
 
     # load algorithm
-    baseline = Baseline(board_size, game_number)
+    algorithm = Test_alg_1(board_size, game_number)
     
     # initiate move registration and move counters
     command_list = ""
@@ -47,7 +49,7 @@ if __name__ == "__main__":
     
     # ask algorithm for input
     while True:
-        command_string = baseline.get_command()
+        command_string = algorithm.get_command()
         command_count += 1
         
         # check if move is valid

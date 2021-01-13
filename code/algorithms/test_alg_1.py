@@ -12,14 +12,14 @@ class Test_alg_1():
 
         self.cars = []
         self.load_cars(self.board_file)
-        self.game = Game(board_size, game_number)
         
         self.best_solution = [] # deze kunnen we ook nog verbeteren met heen en weer moves weghalen
 
-        for _ in range(100):
+        for _ in range(10000):
+            self.game = Game(board_size, game_number)
             new_solution = self.create_solution()
-
             if new_solution:
+                print(len(new_solution))
                 self.best_solution = new_solution
 
 
@@ -43,7 +43,7 @@ class Test_alg_1():
 
         while True:
             car = choice(list(self.cars))
-            move = choice([-1,1])
+            move = choice([-4,-3,-2,-1,1,2,3,4])
 
             if not self.game.valid_move(car, move):
                 continue
@@ -51,7 +51,7 @@ class Test_alg_1():
             self.game.move(car, move)
             solution.append([car,move])
 
-            if len(solution) > len(self.best_solution):
+            if self.best_solution and len(solution) > len(self.best_solution):
                 return False
 
             if self.game.game_won():
