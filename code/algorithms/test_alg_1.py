@@ -43,7 +43,10 @@ class Test_alg_1():
 
         while True:
             car = choice(list(self.cars))
-            move = choice([-4,-3,-2,-1,1,2,3,4])
+            while True:
+                move = choice(range(-(self.board_size + 2), self.board_size - 1))
+                if move != 0:
+                    break
 
             if not self.game.valid_move(car, move):
                 continue
