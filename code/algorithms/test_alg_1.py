@@ -15,7 +15,7 @@ class Test_alg_1():
         
         self.best_solution = [] # deze kunnen we ook nog verbeteren met heen en weer moves weghalen
 
-        for _ in range(10000):
+        for _ in range(100000):
             self.game = Game(board_size, game_number)
             new_solution = self.create_solution()
             if new_solution:
