@@ -15,12 +15,25 @@ class Test_alg_1():
         
         self.best_solution = [] # deze kunnen we ook nog verbeteren met heen en weer moves weghalen
 
-        for _ in range(100000):
+        for _ in range(1000):
             self.game = Game(board_size, game_number)
             new_solution = self.create_solution()
             if new_solution:
                 print(len(new_solution))
                 self.best_solution = new_solution
+
+        # delete moves that cancel each other out
+        delete_moves = []
+
+        for i in range(len(self.best_solution) - 1):
+            if self.best_solution[i][0] == self.best_solution[i + 1][0] and self.best_solution[i][1] == -self.best_solution[i + 1][1]:
+                delete_moves.append(i)
+                delete_moves.append(i + 1)
+
+        for _ in delete_moves:
+            self.best_solution.pop(delete_moves.pop())
+            
+        print(len(self.best_solution))
 
 
     def load_cars(self, board_file):
