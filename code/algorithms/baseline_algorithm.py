@@ -40,8 +40,10 @@ class Baseline():
 
         # pick random car and move it one step forward or backward
         car = choice(list(self.cars))
-        move = choice([-1,1])
-
+        while True:
+            move = choice(range(-(self.board_size + 2), self.board_size - 1))
+            if move != 0:
+                break
         return f"{car},{move}"
 
 
