@@ -162,7 +162,7 @@ class Game():
         # set current tiles to unoccupied
         for tile in self.cars[car_id].tiles:
             self.tiles[tile].set_unoccupied()
-            self.board[floor((tile - 1) / self.board_size) - 1 + tile] = "_"
+            self.board[floor((tile - 1) / self.board_size) - 1 + tile] = "_  "
 
         # set new position car 
         self.cars[car_id].update_position(move, self.board_size)
@@ -170,7 +170,11 @@ class Game():
         # set tiles to occupied 
         for tile in self.cars[car_id].tiles:
             self.tiles[tile].set_occupied()
-            self.board[floor((tile - 1)/ self.board_size) - 1 + tile] = car_id
+
+            if len(car_id) == 2:
+                self.board[floor((tile - 1)/ self.board_size) - 1 + tile] = car_id + " "
+            else:
+                self.board[floor((tile - 1)/ self.board_size) - 1 + tile] = car_id + "  "
 
 
     def give_board(self):
