@@ -12,10 +12,8 @@ class Test_alg_1():
         self.game_number = game_number
         self.board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv"
 
-        self.cars = []
-        self.load_cars(self.board_file)
-        self.game_standard = Game(board_size, game_number)
-
+        # self.cars = []
+        # self.load_cars(self.board_file)
         
         self.best_solution = [] # deze kunnen we ook nog verbeteren met heen en weer moves weghalen
 
@@ -31,19 +29,19 @@ class Test_alg_1():
         print(self.best_solution)
 
 
-    def load_cars(self, board_file):
-        """
-        Loads all the car id's from the board file into a list. 
-        Needs the board file name (string) as parameter.
-        """
+    # def load_cars(self, board_file):
+    #     """
+    #     Loads all the car id's from the board file into a list. 
+    #     Needs the board file name (string) as parameter.
+    #     """
 
-        with open(board_file) as f:
-            # skip header and read each car into list
-            next(f)
+    #     with open(board_file) as f:
+    #         # skip header and read each car into list
+    #         next(f)
 
-            for line in f:
-                car_line = line.split(",")
-                self.cars.append(car_line[0])
+    #         for line in f:
+    #             car_line = line.split(",")
+    #             self.cars.append(car_line[0])
 
 
     def create_solution(self):
@@ -51,7 +49,7 @@ class Test_alg_1():
 
         while True:
 
-            car = choice(list(self.cars))
+            car = choice(list(self.game.car_ids))
             while True:
                 move = choice(range(-(self.board_size + 2), self.board_size - 1)) # VOLGENS MIJ MOET DIT BOARD_SIZE - 2 ZIJN IPV + 2
                 if move != 0:

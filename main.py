@@ -47,6 +47,11 @@ if __name__ == "__main__":
 
     print(" " + game.give_board())
     
+    """
+    deze doet nu nog allemaal checks die niet nodig zijn aangezien hij 
+    alleen solutions aangereikt krijgt 
+    """
+
     # ask algorithm for input
     while True:
         command_string = algorithm.get_command()

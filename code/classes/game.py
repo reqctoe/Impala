@@ -18,6 +18,9 @@ class Game():
         self.tiles = {}
         # map car letters to the corresponding car object
         self.cars = {}
+        self.car_ids = []
+
+        self.moves = []
 
         # load cars and tiles from board file
         board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv" 
@@ -56,6 +59,7 @@ class Game():
         for car in self.cars:
             # create list of tiles occupied by car
             self.cars[car].occupies_tiles(self.board_size)
+            self.car_ids.append(self.cars[car].id)
             
             # set tiles to occupied
             for tile in self.cars[car].tiles:
@@ -159,6 +163,9 @@ class Game():
         """
         
         move = int(move)
+
+        self.moves.append([car_id,move])
+
         # set current tiles to unoccupied
         for tile in self.cars[car_id].tiles:
             self.tiles[tile].set_unoccupied()
@@ -176,6 +183,10 @@ class Game():
             else:
                 self.board[floor((tile - 1)/ self.board_size) - 1 + tile] = car_id + "  "
 
+
+    # vgm is er al iets anders dat deze informatie geeft, even zoeken
+    def get_moves(self):
+        return self.moves
 
     def give_board(self):
         """
