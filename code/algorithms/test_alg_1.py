@@ -20,7 +20,7 @@ class Test_alg_1():
         self.best_solution = [] # deze kunnen we ook nog verbeteren met heen en weer moves weghalen
 
         for i in range(1000):
-            self.game = deepcopy(self.game_standard)
+            self.game = Game(self.board_size, self.game_number)
             new_solution = self.create_solution()
             if new_solution:
                 print(len(new_solution))
@@ -53,7 +53,7 @@ class Test_alg_1():
 
             car = choice(list(self.cars))
             while True:
-                move = choice(range(-(self.board_size + 2), self.board_size - 1))
+                move = choice(range(-(self.board_size + 2), self.board_size - 1)) # VOLGENS MIJ MOET DIT BOARD_SIZE - 2 ZIJN IPV + 2
                 if move != 0:
                     if solution:
                         if [car, -move] != solution[-1]:
