@@ -19,7 +19,7 @@ class Test_alg_1():
         
         self.best_solution = [] # deze kunnen we ook nog verbeteren met heen en weer moves weghalen
 
-        for i in range(100):
+        for i in range(1000):
             self.game = deepcopy(self.game_standard)
             new_solution = self.create_solution()
             if new_solution:
