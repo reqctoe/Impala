@@ -1,6 +1,6 @@
 import copy
 
-Class BreadthFirst:
+class BreadthFirst:
     
     def __init__(self, game):
         self.game = copy.deepcopy(game)
