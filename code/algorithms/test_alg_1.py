@@ -1,4 +1,3 @@
-from copy import deepcopy
 from random import choice
 
 
@@ -14,13 +13,11 @@ class Test_alg_1():
 
         self.cars = []
         self.load_cars(self.board_file)
-        self.game_standard = Game(board_size, game_number)
-
         
         self.best_solution = [] # deze kunnen we ook nog verbeteren met heen en weer moves weghalen
 
         for i in range(10000):
-            self.game = deepcopy(self.game_standard)
+            self.game = Game(board_size, game_number)
             new_solution = self.create_solution()
             if new_solution:
                 print(len(new_solution))
