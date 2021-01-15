@@ -35,16 +35,11 @@ if __name__ == "__main__":
     # initiate move registration and move counters
     command_list = ""
     command_count = 0
-    valid_command_count = 0
 
     # initiate output file
     with open('data/output_files/output.csv', 'w', newline ='') as outputfile:
         writer = csv.writer(outputfile)
         writer.writerow(["car", "move"])
-        
-    # print welcome message and initial game board
-    print("Enter a move in the folowing format:\n[car_id],[move]\n" +
-            "when you want to move left or up, enter a negative number.")
 
     print(" " + game.give_board())
     
@@ -63,8 +58,6 @@ if __name__ == "__main__":
         
         # if not game.valid_move(*command):
         #     continue
-        # count valid move
-        valid_command_count += 1
         
         # update output string and perform move
         command_list += f"{command_string}\n"
@@ -75,7 +68,6 @@ if __name__ == "__main__":
             # print final gameboard state and total number of input and valid moves
             print(" "+game.give_board())
             print(command_count)
-            print(valid_command_count)
             print("Congratulations, you have won the game!")
 
             # write all valid moves to output file
