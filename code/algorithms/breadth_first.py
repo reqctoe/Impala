@@ -1,4 +1,5 @@
 import copy
+from code.classes.game import Game
 
 class BreadthFirst:
     
@@ -6,8 +7,7 @@ class BreadthFirst:
         self.game = copy.deepcopy(game)
 
         # make copy of the current game
-        # self.states = [copy.deepcopy(self.game)]
-        self.states = {self.game.give_board(): copy.deepcopy(self.game)}
+        self.states = {self.game.give_board(): self.get_car_coords(self.game)}
         self.state_keys = [self.game.give_board()]
 
         self.best_solution = None
@@ -19,15 +19,13 @@ class BreadthFirst:
         Make list with car, orientation, column, row and length and moves
         """
         info = []
-        moves = []
-        data =[info, moves]
-
-        game_state.get_moves()
-
-        for car in game_state.cars:
+        for car_id in game_state.cars:
+            car = game_state.cars[car_id]
             info.append(f"{car.id},{car.orientation},{car.col},{car.row},{car.length}")
 
-        
+        moves = game_state.get_moves()
+
+        return [info, moves]        
 
 
     def get_next_state(self):
@@ -39,26 +37,38 @@ class BreadthFirst:
         """
         Creates all possible child-states and adds them to the list of states
         """
+        game = Game(self.game.board_size, self.game.game_number, game_state)
+
         # 
-        for car in self.game.car_ids: 
-            for i in range(-self.game.board_size - 2, self.game.board_size - 1):
+        for car in game.car_ids: 
+            for i in range(- game.board_size - 2, game.board_size - 1):
                 if i != 0:
                     # check if the move is valid/possible
-                    if game_state.valid_move(car, i):
-                        if game_state.get_moves() and [car,-i] == game_state.get_moves()[-1]:
+                    if game.valid_move(car, i):
+                        if game.get_moves() and [car,-i] == game.get_moves()[-1]:
                             break
                         # make a new state
-                        new_game_state = copy.deepcopy(game_state)
+                        # new_game_state = copy.deepcopy(game_state)
                         # move the car
-                        new_game_state.move(car, i)
+                        # new_game_state.move(car, i)
+                        game.move(car, i)
 
                         # check if it is a solution
-                        if new_game_state.game_won():
-                            self.best_solution = new_game_state.get_moves()
+                        if game.game_won():
+                            print("heuy")
+                            self.best_solution = game.get_moves()
                         else:
-                            if new_game_state.give_board() not in self.states:
-                                self.state_keys.append(new_game_state.give_board())
-                                self.states[new_game_state.give_board()] = new_game_state
+                            if game.give_board() not in self.states:
+                                print("waaah")
+                                self.state_keys.append(game.give_board())
+                                self.states[game.give_board()] = self.get_car_coords(game)
+            
+                        # if new_game_state.game_won():
+                        #     self.best_solution = new_game_state.get_moves()
+                        # else:
+                        #     if new_game_state.give_board() not in self.states:
+                        #         self.state_keys.append(new_game_state.give_board())
+                        #         self.states[new_game_state.give_board()] = new_game_state
                             # self.states.append(new_game_state)
     
     def create_solution(self): # moet dit in main.py of in de init worden aangeroepen?
@@ -85,6 +95,7 @@ class BreadthFirst:
             self.build_children(new_state)
 
             if self.best_solution != None:
+                print("hoi")
                 break
 
     def get_command(self):
