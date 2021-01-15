@@ -15,32 +15,44 @@ class Test_alg_2():
         self.load_cars(self.board_file)
 
         self.moves = self.create_move_list()
+        self.depth = 0
 
-        self.best_solution = self.run_children([]) # IETS MET DEPTH TOEVOEGEN OM ER EEN BREADTH FIRST VAN TE MAKEN
+        while True:
+            self.best_solution = self.run_children([], self.depth)
+            if self.best_solution:
+                break
+            self.depth += 1
+            print(self.depth)
 
-    def run_children(self, parent_moves):
+    def run_children(self, parent_moves, depth):
+
+        if depth < 1:
+            for car in self.cars:
+                for move in self.moves:
+                    try_moves = deepcopy(parent_moves)
+                    try_moves.append([car, move])
+                    # print(try_moves)
+                    self.game = Game(self.board_size, self.game_number)
+
+                    for try_move in try_moves:
+                        if not self.game.valid_move(*try_move):
+                            break
+                        self.game.move(*try_move)
+                    
+                        if self.game.game_won():
+                            return try_moves
+            return False
+
+        depth -= 1
+
         for car in self.cars:
             for move in self.moves:
-                try_moves = deepcopy(parent_moves)
-                try_moves.append([car, move])
-                print(try_moves)
-                self.game = Game(self.board_size, self.game_number)
-
-                for try_move in try_moves:
-                    if not self.game.valid_move(*try_move):
-                        break
-                    self.game.move(*try_move)
-                
-                    if self.game.game_won():
-                        return try_moves
-
-        for car in self.cars:
-            for move in self.moves:
-                new_parent_moves = parent_moves
+                new_parent_moves = deepcopy(parent_moves)
                 new_parent_moves.append([car, move])
-                best_solution = self.run_children(new_parent_moves)
+                best_solution = self.run_children(new_parent_moves, depth)
 
                 if best_solution:
+                    print("test")
                     return best_solution
 
 
