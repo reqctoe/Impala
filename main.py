@@ -1,5 +1,6 @@
 from code.algorithms.baseline_algorithm import Baseline
 from code.algorithms.test_alg_1 import Test_alg_1
+from code.algorithms.test_alg_2 import Test_alg_2
 from code.algorithms.breadth_first import BreadthFirst
 
 from code.classes.game import Game
@@ -29,9 +30,34 @@ if __name__ == "__main__":
     game_number, board_size = argv[1], argv[2]
     game = Game(board_size, game_number)
 
-    # load algorithm
-    algorithm = BreadthFirst(game)
+    # # load algorithm
+    # algorithm = BreadthFirst(game)
     
+    # ask user what algorithm they want to run
+    print("Type the number of the algorithm that you want to run")
+    print("1 baseline: Fills in random numbers")
+    print("2 test alg 1: tries to fill in random numbers and r")
+    print("3 test alg 2: breadth first without heuristics")
+    print("4 breadth first: breadth first with dictionary heuristic")
+
+    # keep asking for input until an algorithm is loaded
+    while True:
+        algorithm_number = input("> ")
+
+        if algorithm_number == 1:
+            algorithm = Baseline(board_size, game_number)
+        elif algorithm_number == 2:
+            algorithm = Test_alg_1(board_size, game_number)
+        elif algorithm_number == 3:
+            algorithm = Test_alg_2(board_size, game_number)
+        elif algorithm_number == 4:
+            algorithm = BreadthFirst(game)
+        else:
+            print("Invalid algorithm number")
+            continue
+
+        break
+
     # initiate move registration and move counters
     command_list = ""
     command_count = 0
