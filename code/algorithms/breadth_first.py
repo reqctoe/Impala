@@ -44,6 +44,8 @@ class BreadthFirst:
         Creates all possible child-states and adds them to the list of states
         """
         game_node = Game(self.game.board_size, self.game.game_number, state_data)
+        # print(game_node.give_board())
+        # print(game_node.get_moves())
 
         # 
         for car in game_node.car_ids: 
@@ -54,9 +56,11 @@ class BreadthFirst:
                         if game_node.get_moves() and [car,-i] == game_node.get_moves()[-1]:
                             break
                         # make a new state
-                        new_game_state = Game(self.game.board_size, self.game.game_number, state_data)
+                        new_game_state = Game(self.game.board_size, self.game.game_number, copy.deepcopy(state_data))
+                        # new_game_state = copy.deepcopy(game_node)
                         # move the car
                         new_game_state.move(car, i)
+                        # print(f"Na Move: {new_game_state.get_moves()}")
 
                         # check if it is a solution
                         if new_game_state.game_won():
@@ -105,6 +109,9 @@ class BreadthFirst:
 
             if self.best_solution != None:
                 break
+
+            # if count >= 5:
+            #     break
 
     def get_command(self):
         command_list = self.best_solution.pop(0)
