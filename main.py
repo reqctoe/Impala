@@ -1,5 +1,6 @@
 from code.algorithms.baseline_algorithm import Baseline
 from code.algorithms.test_alg_1 import Test_alg_1
+from code.algorithms.breadth_first import BreadthFirst
 
 from code.classes.game import Game
 
@@ -29,7 +30,7 @@ if __name__ == "__main__":
     game = Game(board_size, game_number)
 
     # load algorithm
-    algorithm = Test_alg_1(board_size, game_number)
+    algorithm = BreadthFirst(game)
     
     # initiate move registration and move counters
     command_list = ""
@@ -60,8 +61,8 @@ if __name__ == "__main__":
         # check if move is valid
         command = command_string.split(",")
         
-        if not game.valid_move(*command):
-            continue
+        # if not game.valid_move(*command):
+        #     continue
         # count valid move
         valid_command_count += 1
         

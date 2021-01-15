@@ -51,7 +51,7 @@ class Test_alg_1():
 
             car = choice(list(self.game.car_ids))
             while True:
-                move = choice(range(-(self.board_size + 2), self.board_size - 1)) # VOLGENS MIJ MOET DIT BOARD_SIZE - 2 ZIJN IPV + 2
+                move = choice(range(-(self.board_size - 2), self.board_size - 1)) # VOLGENS MIJ MOET DIT BOARD_SIZE - 2 ZIJN IPV + 2
                 if move != 0:
                     if solution:
                         if [car, -move] != solution[-1]:

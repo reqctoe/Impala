@@ -6,56 +6,47 @@ class BreadthFirst:
         self.game = copy.deepcopy(game)
 
         # make copy of the current game
-        self.states = [copy.deepcopy(self.game)]
+        # self.states = [copy.deepcopy(self.game)]
+        self.states = {self.game.give_board(): copy.deepcopy(self.game)}
+        self.state_keys = [self.game.give_board()]
 
         self.best_solution = None
 
-        # self.cars = []
-        # self.board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv"
-
-        # self.load_cars(self.board_file)
-
-
-    # def load_cars(self, board_file):
-    #     """
-    #     Loads all the car id's from the board file into a list. 
-    #     Needs the board file name (string) as parameter.
-    #     """
-
-        
-        
-    #     with open(board_file) as f:
-    #         # skip header and read each car into list
-    #         next(f)
-
-    #         for line in f:
-    #             car_line = line.split(",")
-    #             self.cars.append(car_line[0])
+        self.create_solution()
 
 
     def get_next_state(self):
-        return self.states.pop(0)
+        # return self.states.pop(0)
+        key = self.state_keys.pop(0)
+        return self.states[key]
 
     def build_children(self, game_state):
         """
         Creates all possible child-states and adds them to the list of states
         """
         # 
-        for car in self.game.car_ids: # weet niet precies in welke variabele dit gaat zitten
-            for i in [-1,1]:
-                # check if the move is valid/possible
-                if game_state.valid_move(car, i):
-                    # make a new state
-                    new_game_state = copy.deepcopy(game_state)
-                    # move the car
-                    new_game_state.move(car, i)
-                    # check if it is a solution
-                    if new_game_state.won():
-                        self.best_solution = new_game_state
-                    else:
-                        self.states.append(new_game_state)
+        for car in self.game.car_ids: 
+            for i in range(-self.game.board_size - 2, self.game.board_size - 1):
+                if i != 0:
+                    # check if the move is valid/possible
+                    if game_state.valid_move(car, i):
+                        if game_state.get_moves() and [car,-i] == game_state.get_moves()[-1]:
+                            break
+                        # make a new state
+                        new_game_state = copy.deepcopy(game_state)
+                        # move the car
+                        new_game_state.move(car, i)
+
+                        # check if it is a solution
+                        if new_game_state.game_won():
+                            self.best_solution = new_game_state.get_moves()
+                        else:
+                            if new_game_state.give_board() not in self.states:
+                                self.state_keys.append(new_game_state.give_board())
+                                self.states[new_game_state.give_board()] = new_game_state
+                            # self.states.append(new_game_state)
     
-    def run(self): # moet dit in main.py of in de init worden aangeroepen?
+    def create_solution(self): # moet dit in main.py of in de init worden aangeroepen?
         """
         Zolang je self.states lijst niet leeg is:
             RIJ 1:
@@ -67,17 +58,22 @@ class BreadthFirst:
                     gooi in build_children
                 .....               
         """
+        count = 0
 
-        while self.states:
+        while self.state_keys:
+        # while self.states:
+            count += 1
             new_state = self.get_next_state()
+            if count % 1000 == 0:
+                print(len(new_state.get_moves()))
 
             self.build_children(new_state)
 
             if self.best_solution != None:
-                return self.best_solution.get_moves # moet ie returnen?
+                break
 
     def get_command(self):
-        command_list = self.best_solution.get_moves # is get moves nodig?
+        command_list = self.best_solution.pop(0)
         car, move = command_list[0:2]
         return f"{car},{move}"
         
