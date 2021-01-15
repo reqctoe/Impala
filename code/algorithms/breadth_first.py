@@ -36,7 +36,7 @@ class BreadthFirst:
     def get_next_state(self):
         return self.states.pop(0)
 
-    def build_children(self, game_state, car):
+    def build_children(self, game_state):
         """
         Creates all possible child-states and adds them to the list of states
         """
@@ -71,7 +71,7 @@ class BreadthFirst:
         while self.states:
             new_state = self.get_next_state()
 
-            build_children(new_state)
+            self.build_children(new_state)
 
             if self.best_solution != None:
                 return self.best_solution.get_moves # moet ie returnen?
