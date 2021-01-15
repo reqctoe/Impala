@@ -44,6 +44,8 @@ if __name__ == "__main__":
     while True:
         algorithm_number = input("> ")
 
+        algorithm_number = int(algorithm_number)
+
         if algorithm_number == 1:
             algorithm = Baseline(board_size, game_number)
         elif algorithm_number == 2:
