@@ -8,6 +8,7 @@ class Game():
     def __init__(self, board_size, game_number, data = None):
         
         self.board_size = int(board_size)
+        self.game_number = int(game_number)
         # winning tile id        
         self.winning_tile = ceil(self.board_size / 2) * self.board_size
         # board occupation list
@@ -20,15 +21,14 @@ class Game():
         self.cars = {}
         self.car_ids = []
 
-
-        self.data = data[0]
-
         self.load_tiles()
         # load cars and tiles from board file
-        if not self.data:
+        if not data:
+            self.data = data
             self.moves = []
-            board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv" 
+            board_file = f"data/gameboards/Rushhour{self.board_size}x{self.board_size}_{self.game_number}.csv" 
         else:
+            self.data = data[0]
             self.moves = data[1]
             board_file = self.data
         self.load_cars(board_file)
