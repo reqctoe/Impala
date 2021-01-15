@@ -5,7 +5,7 @@ from math import ceil, floor
 
 class Game():
     
-    def __init__(self, board_size, game_number):
+    def __init__(self, board_size, game_number, data = None):
         
         self.board_size = int(board_size)
         # winning tile id        
@@ -20,11 +20,17 @@ class Game():
         self.cars = {}
         self.car_ids = []
 
-        self.moves = []
 
-        # load cars and tiles from board file
-        board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv" 
+        self.data = data[0]
+
         self.load_tiles()
+        # load cars and tiles from board file
+        if not self.data:
+            self.moves = []
+            board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv" 
+        else:
+            self.moves = data[1]
+            board_file = self.data
         self.load_cars(board_file)
 
         # load board
@@ -49,12 +55,17 @@ class Game():
         Load cars from file
         """
 
-        # open file and create car objects
-        with open(board_file) as f:
-            next(f)
-            for line in f:
+        if self.data:
+            for line in board_file:
                 car_line = line.split(",")
                 self.cars[car_line[0]] = Car(*car_line)
+        # open file and create car objects
+        else:    
+            with open(board_file) as f:
+                next(f)
+                for line in f:
+                    car_line = line.split(",")
+                    self.cars[car_line[0]] = Car(*car_line)
 
         for car in self.cars:
             # create list of tiles occupied by car
@@ -64,7 +75,7 @@ class Game():
             # set tiles to occupied
             for tile in self.cars[car].tiles:
                 self.tiles[tile].set_occupied()
-            
+    
 
     def current_board(self):
         """
@@ -184,7 +195,6 @@ class Game():
                 self.board[floor((tile - 1)/ self.board_size) - 1 + tile] = car_id + "  "
 
 
-    # vgm is er al iets anders dat deze informatie geeft, even zoeken
     def get_moves(self):
         return self.moves
 

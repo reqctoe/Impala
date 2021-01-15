@@ -14,6 +14,21 @@ class BreadthFirst:
 
         self.create_solution()
 
+    def get_car_coords(self, game_state):
+        """
+        Make list with car, orientation, column, row and length and moves
+        """
+        info = []
+        moves = []
+        data =[info, moves]
+
+        game_state.get_moves()
+
+        for car in game_state.cars:
+            info.append(f"{car.id},{car.orientation},{car.col},{car.row},{car.length}")
+
+        
+
 
     def get_next_state(self):
         # return self.states.pop(0)
