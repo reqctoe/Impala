@@ -44,8 +44,14 @@ if __name__ == "__main__":
     while True:
         algorithm_number = input("> ")
 
-        algorithm_number = int(algorithm_number)
+        # make sure an integer value is given
+        try:
+            algorithm_number = int(algorithm_number)
+        except:
+            print("Invalid algorithm number")
+            continue
 
+        # load requested algorithm
         if algorithm_number == 1:
             algorithm = Baseline(board_size, game_number)
         elif algorithm_number == 2:
