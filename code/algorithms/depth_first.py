@@ -6,6 +6,10 @@ import copy
 
 class DepthFirst(BreadthFirst):
     def get_next_state(self):
+        print(self.state_keys)
+        print(self.states)
+        input()
+
         key = self.state_keys.pop()
         
         print(f"Queue length: {len(self.state_keys)}")
@@ -30,11 +34,15 @@ class DepthFirst(BreadthFirst):
                             break
                         # make a new state
                         new_game_state = Game(self.game.board_size, self.game.game_number, copy.deepcopy(state_data))
+
                         # new_game_state = copy.deepcopy(game_node)
                         # move the car
                         new_game_state.move(car, i)
                         # print(f"Na Move: {new_game_state.get_moves()}")
 
+                        # print(new_game_state.give_board())
+
+                        # input()
                         # check if it is a solution
                         if new_game_state.game_won():
                             self.best_solution = new_game_state.get_moves()
