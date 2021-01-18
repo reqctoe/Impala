@@ -26,7 +26,7 @@ class Test_alg_1():
             if i % 1000 == 0:
                 print(f"We are at {i} tries!")
 
-        print(self.best_solution)
+        # print(self.best_solution)
 
 
     # def load_cars(self, board_file):

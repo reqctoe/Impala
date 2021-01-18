@@ -44,6 +44,7 @@ class Baseline():
             move = choice(range(-(self.board_size + 2), self.board_size - 1))
             if move != 0:
                 break
+         
         return f"{car},{move}"
 
 

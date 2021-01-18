@@ -2,6 +2,7 @@ from code.algorithms.baseline_algorithm import Baseline
 from code.algorithms.test_alg_1 import Test_alg_1
 from code.algorithms.test_alg_2 import Test_alg_2
 from code.algorithms.breadth_first import BreadthFirst
+from code.algorithms.depth_first import DepthFirst
 
 from code.classes.game import Game
 
@@ -39,6 +40,7 @@ if __name__ == "__main__":
     print("2 test alg 1: tries to fill in random numbers and r")
     print("3 test alg 2: breadth first without heuristics")
     print("4 breadth first: breadth first with dictionary heuristic")
+    print("5 depth first: depth first")
 
     # keep asking for input until an algorithm is loaded
     while True:
@@ -60,6 +62,8 @@ if __name__ == "__main__":
             algorithm = Test_alg_2(board_size, game_number)
         elif algorithm_number == 4:
             algorithm = BreadthFirst(game)
+        elif algorithm_number == 5:
+            algorithm = DepthFirst(game)
         else:
             print("Invalid algorithm number")
             continue
@@ -90,8 +94,8 @@ if __name__ == "__main__":
         # check if move is valid
         command = command_string.split(",")
         
-        # if not game.valid_move(*command):
-        #     continue
+        if not game.valid_move(*command):
+            continue
         
         # update output string and perform move
         command_list += f"{command_string}\n"
