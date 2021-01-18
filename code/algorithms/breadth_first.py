@@ -46,8 +46,7 @@ class BreadthFirst:
         game_node = Game(self.game.board_size, self.game.game_number, state_data)
         # print(game_node.give_board())
         # print(game_node.get_moves())
-
-        # 
+ 
         for car in game_node.car_ids: 
             for i in range(- game_node.board_size - 2, game_node.board_size - 1):
                 if i != 0:
