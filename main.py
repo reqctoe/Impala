@@ -73,7 +73,7 @@ if __name__ == "__main__":
         elif algorithm_number == 6:
             algorithm = Random_loopcutter_breadthfirst(game)
         elif algorithm_number == 7:
-            algorithm = AStar(game)
+            algorithm = AStar(board_size, game_number)
         else:
             print("Invalid algorithm number")
             continue
