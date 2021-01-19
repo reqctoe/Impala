@@ -3,6 +3,9 @@ from code.algorithms.random_repeater import Random_repeater
 from code.algorithms.test_alg_2 import Test_alg_2
 from code.algorithms.breadth_first import BreadthFirst
 from code.algorithms.depth_first import DepthFirst
+from code.algorithms.random_loopcutter_breadthfirst import Random_loopcutter_breadthfirst
+from code.algorithms.astar import AStar
+
 
 from code.classes.game import Game
 
@@ -41,6 +44,9 @@ if __name__ == "__main__":
     print("3 test alg 2: breadth first without heuristics")
     print("4 breadth first: breadth first with dictionary heuristic")
     print("5 depth first: depth first")
+    print("6 random loopcutter breathfirst: combination of these three algorithms")
+    print("7 a star: random combined with a star")
+
 
     # keep asking for input until an algorithm is loaded
     while True:
@@ -63,6 +69,10 @@ if __name__ == "__main__":
         elif algorithm_number == 4:
             algorithm = BreadthFirst(game)
         elif algorithm_number == 5:
+            algorithm = DepthFirst(game)
+        elif algorithm_number == 6:
+            algorithm = DepthFirst(game)
+        elif algorithm_number == 7:
             algorithm = DepthFirst(game)
         else:
             print("Invalid algorithm number")
