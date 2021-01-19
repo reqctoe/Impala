@@ -1,5 +1,5 @@
 from code.algorithms.baseline_algorithm import Baseline
-from code.algorithms.test_alg_1 import Test_alg_1
+from code.algorithms.random_repeater import Random_repeater
 from code.algorithms.test_alg_2 import Test_alg_2
 from code.algorithms.breadth_first import BreadthFirst
 from code.algorithms.depth_first import DepthFirst
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         if algorithm_number == 1:
             algorithm = Baseline(board_size, game_number)
         elif algorithm_number == 2:
-            algorithm = Test_alg_1(board_size, game_number)
+            algorithm = Random_repeater(board_size, game_number)
         elif algorithm_number == 3:
             algorithm = Test_alg_2(board_size, game_number)
         elif algorithm_number == 4:
