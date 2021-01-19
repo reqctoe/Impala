@@ -36,12 +36,12 @@ class BreadthFirst:
         count = 0
 
         while self.state_keys:
-            # count += 1
+            count += 1
             new_state_data = self.get_next_state()
             game_node = Game(self.game.board_size, self.game.game_number, new_state_data)
             
-            # if count % 5 == 0:
-            #     print(f"ROW:{len(new_state_data[1])}")
+            if count % 100 == 0:
+                print(f"ROW:{len(new_state_data[1])}")
 
             for car in self.cars: 
                 for i in self.move_range:
@@ -58,12 +58,11 @@ class BreadthFirst:
     def get_next_state(self):
         key = self.state_keys.pop(0)
         
-        print(f"Queue length: {len(self.state_keys)}")
+        # print(f"Queue length: {len(self.state_keys)}")
         state_data = self.states[key]
         self.states[key] = ""
 
         return state_data
-
 
 
     def build_child(self, game_node, car, move):

@@ -5,7 +5,7 @@ from random import choice
 from code.classes.game import Game
 
 
-class Test_alg_1():
+class Random_repeater():
     
     def __init__(self, board_size, game_number):
         self.board_size = int(board_size)
