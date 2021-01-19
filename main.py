@@ -71,9 +71,9 @@ if __name__ == "__main__":
         elif algorithm_number == 5:
             algorithm = DepthFirst(game)
         elif algorithm_number == 6:
-            algorithm = DepthFirst(game)
+            algorithm = Random_loopcutter_breadthfirst(game)
         elif algorithm_number == 7:
-            algorithm = DepthFirst(game)
+            algorithm = AStar(game)
         else:
             print("Invalid algorithm number")
             continue
