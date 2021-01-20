@@ -1,10 +1,11 @@
+from copy import deepcopy
 
 
 
 class Breadthfirst_improver:
     
     def __init__(self, game):
-        self.game = game
+        self.game = deepcopy(game)
         self.moves_file = "data/output_files/random_loopcutter_7_263moves"
         self.solution = []
 
