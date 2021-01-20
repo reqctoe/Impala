@@ -29,48 +29,11 @@ class BreadthFirst:
         self.create_solution()
 
 
-<<<<<<< Updated upstream
-    def add_to_archive(self, game):
-        if game.give_board() not in self.row1 or self.row2 or self.current_row:
-            self.state_keys.append(game.give_board())
-            self.states[game.give_board()] = self.get_node_data(game)
-            # self.order_archive(game)
-
-    # def order_archive(self, game):
-    #     row = len(game.get_moves())
-    #     if row > self.row:
-    #         self.row = row
-    #         self.row1.clear() 
-    #         self.row1 = deepcopy(self.row2)
-    #         self.row2.clear()
-    #         self.row2 = deepcopy(self.current_row)
-    #         self.current_row.clear()
-        
-    #     self.current_row[game.give_board()] = self.get_node_data(game)
-        
-
-    # def clean_archive(self, game):
-    #     self.clean.append(game.give_board())
-        
-    #     if len(game.get_moves()) > 3:
-    #         for i in ......:
-    #             board = self.clean.pop(i)
-    #             self.states.pop(board)
-
-        # self.clean.append([game.give_board(), self.get_node_data(game)])
-
-        # if len(game.get_moves()) > 3:
-        #     [self.clean.pop(i) for i in .....]
-        #     self.states.clear() 
-        #     for node in self.clean:
-        #         self.states[node[0]] = node[1]
-=======
     def get_next_state(self):
         # return self.states.pop(0)
         key = self.state_keys.pop(0)
         print(f" Queue length: {len(self.state_keys)}")
         return self.states[key]
->>>>>>> Stashed changes
 
 
     def create_solution(self): 
@@ -80,16 +43,12 @@ class BreadthFirst:
         count = 0
 
         while self.state_keys:
-            count += 1    
-            # print(self.row1)
-            print(self.row2)
-            # print(self.current_row)
+            count += 1
             new_state_data = self.get_next_state()
             game_node = Game(self.game.board_size, self.game.game_number, new_state_data)
             
-            if count % 50 == 0:
-                print("beep")
-            #     print(f"ROW:{len(new_state_data[1])}")
+            if count % 100 == 0:
+                print(f"ROW:{len(new_state_data[1])}")
 
             for car in self.cars: 
                 for i in self.move_range:
@@ -97,7 +56,6 @@ class BreadthFirst:
                     if game_node.valid_move(car, i):
                         if game_node.get_moves() and [car,-i] == game_node.get_moves()[-1]:
                             break
-<<<<<<< Updated upstream
                         
                         self.build_child(game_node, car, i)
 
@@ -109,15 +67,10 @@ class BreadthFirst:
         key = self.state_keys.pop(0)
         
         # print(f"Queue length: {len(self.state_keys)}")
-        if key not in self.row2:
-            state_data = self.current_row[key]
-            self.current_row[key] = ""
-        else:
-            state_data = self.row2[key]
-            self.row2[key] = ""
+        state_data = self.states[key]
+        self.states[key] = ""
 
         return state_data
-
 
 
     def build_child(self, game_node, car, move):
@@ -139,7 +92,6 @@ class BreadthFirst:
                             # self.states.append(new_game_state)
     
     def create_solution(self): # moet dit in main.py of in de init worden aangeroepen?
->>>>>>> Stashed changes
         """
         Creates all possible child-states and adds them to the list of states
         """
@@ -149,7 +101,6 @@ class BreadthFirst:
         # move the car
         new_node.move(car, move)
 
-<<<<<<< Updated upstream
         # check if it is a solution
         if new_node.game_won():
             self.best_solution = new_node.get_moves()
@@ -166,14 +117,12 @@ class BreadthFirst:
         for car_id in game_node.cars:
             car = game_node.cars[car_id]
             info.append(f"{car.id},{car.orientation},{car.col},{car.row},{car.length}")
-=======
         while self.state_keys:
         # while self.states:
             count += 1
             new_state = self.get_next_state()
             if count % 5 == 0:
                 print(len(new_state.get_moves()))
->>>>>>> Stashed changes
 
         moves = game_node.get_moves()
         return [info, moves]        

@@ -5,43 +5,31 @@ from random import choice
 from code.classes.game import Game
 
 
-class Test_alg_1():
+class Random_repeater():
     
     def __init__(self, board_size, game_number):
         self.board_size = int(board_size)
         self.game_number = game_number
-        self.board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv"
+        self.board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv" # DIT KAN DENK IK WEG
+        
 
         # self.cars = []
         # self.load_cars(self.board_file)
         
         self.best_solution = [] # deze kunnen we ook nog verbeteren met heen en weer moves weghalen
+        self.best_game = None
 
-        for i in range(1000):
+        for i in range(100):
             self.game = Game(self.board_size, self.game_number)
             new_solution = self.create_solution()
             if new_solution:
                 print(len(new_solution))
                 self.best_solution = new_solution
+                self.best_game = self.game
             if i % 1000 == 0:
                 print(f"We are at {i} tries!")
 
         # print(self.best_solution)
-
-
-    # def load_cars(self, board_file):
-    #     """
-    #     Loads all the car id's from the board file into a list. 
-    #     Needs the board file name (string) as parameter.
-    #     """
-
-    #     with open(board_file) as f:
-    #         # skip header and read each car into list
-    #         next(f)
-
-    #         for line in f:
-    #             car_line = line.split(",")
-    #             self.cars.append(car_line[0])
 
 
     def create_solution(self):
@@ -71,6 +59,8 @@ class Test_alg_1():
             if self.game.game_won():
                 return solution
 
+    def get_game(self):
+        return self.best_game
 
     def get_command(self):
         command_list = self.best_solution.pop(0)
