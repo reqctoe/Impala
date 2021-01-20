@@ -5,7 +5,7 @@ from code.algorithms.breadth_first import BreadthFirst
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.random_loopcutter_breadthfirst import Random_loopcutter_breadthfirst
 from code.algorithms.astar import AStar
-
+from code.algorithms.breadthfirst_improver import Breadthfirst_improver
 
 from code.classes.game import Game
 
@@ -46,6 +46,7 @@ if __name__ == "__main__":
     print("5 depth first: depth first")
     print("6 random loopcutter breathfirst: combination of these three algorithms")
     print("7 a star: random combined with a star")
+    print("8 breadthfirst improver: improves an existing output with breadthfirst")
 
 
     # keep asking for input until an algorithm is loaded
@@ -74,6 +75,8 @@ if __name__ == "__main__":
             algorithm = Random_loopcutter_breadthfirst(game)
         elif algorithm_number == 7:
             algorithm = AStar(board_size, game_number)
+        elif algorithm_number == 8:
+            algorithm = Breadthfirst_improver(game)
         else:
             print("Invalid algorithm number")
             continue
