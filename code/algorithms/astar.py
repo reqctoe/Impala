@@ -63,6 +63,8 @@ class AStar:
                         if new_board.game_won():
                             self.best_solution = new_board.get_moves()
                             print(len(self.best_solution))
+                        elif len(new_board.get_moves()) > self.max_moves:
+                            self.remove_loops(new_board.get_moves())
                         elif new_score < best_score:
                             print(new_score, best_score)
                             best_score = new_score
@@ -80,6 +82,35 @@ class AStar:
                 
                 if self.best_solution != None:
                     break
+
+    def remove_loops(self, moves):
+        game = deepcopy(self.board)
+        game_boards = []
+        game_boards.append(game.give_board())
+
+        for move in moves:
+            game.move(*move)
+            game_boards.append(game.give_board())
+
+        # keep cutting until there are no more double states left
+        while True:
+            game_boards_set = set(game_boards)
+
+            for board in game_boards_set:
+                # get all indices of a game state in board_list
+                board_indices = [i for i, e in enumerate(game_boards) if e == board]
+
+                # if a state occurs more than once, delete the moves in between
+                if len(board_indices) > 1:
+                    del game_boards[board_indices[0]: board_indices[-1]]
+                    print(f"Removed move {board_indices[0]} to {board_indices[-1]}")
+                    del moves[board_indices[0]: board_indices[-1]]
+
+                    break
+            else:
+                break
+
+        return moves
     
     def add_to_archive(self, game):
         if game.give_board() not in self.states:
