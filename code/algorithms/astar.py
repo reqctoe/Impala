@@ -58,9 +58,12 @@ class AStar:
                 for move in new_moves:
                     self.board.move(*move)
                 
-                car = choice(self.cars)
-                move = choice(self.move_range)
-                self.board.move(car, move)
+                while True:
+                    car = choice(self.cars)
+                    move = choice(self.move_range)
+                    if self.board.valid_move(car, move):
+                        self.board.move(car, move)
+                        break
 
             for car in self.cars: 
                 for i in self.move_range:
