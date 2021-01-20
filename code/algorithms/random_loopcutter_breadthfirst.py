@@ -42,14 +42,16 @@ class Random_loopcutter_breadthfirst:
                 # if a state occurs more than once, delete the moves in between
                 if len(board_indices) > 1:
                     del game_boards[board_indices[0]: board_indices[-1]]
-                    print(f"Removed move {board_indices[0]} to {board_indices[-1]}")
                     del solution[board_indices[0]: board_indices[-1]]
-
+                    print(f"Removed move {board_indices[0]} to {board_indices[-1]}")
                     break
+            # when no duplicates are found anymore, stop cutting
             else:
                 break
 
         return solution
+
+
 
     def get_command(self):
         command_list = self.cut_solution.pop(0)

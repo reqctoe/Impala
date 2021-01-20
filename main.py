@@ -5,7 +5,7 @@ from code.algorithms.breadth_first import BreadthFirst
 from code.algorithms.depth_first import DepthFirst
 from code.algorithms.random_loopcutter_breadthfirst import Random_loopcutter_breadthfirst
 from code.algorithms.astar import AStar
-
+from code.algorithms.breadthfirst_improver import Breadthfirst_improver
 
 from code.classes.game import Game
 
