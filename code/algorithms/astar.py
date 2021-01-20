@@ -1,4 +1,5 @@
 from copy import deepcopy
+from random import choice
 
 from .random_repeater import Random_repeater
 from code.classes.game import Game
@@ -50,6 +51,17 @@ class AStar:
             best_score = float('inf')
             best_move = None
 
+            if len(self.board.get_moves()) >= self.max_moves:
+                print("loops verwijderen")
+                new_moves = self.remove_loops(self.board.get_moves())
+                self.board = Game(self.solution.board_size, self.solution.game_number)
+                for move in new_moves:
+                    self.board.move(*move)
+                
+                car = choice(self.cars)
+                move = choice(self.move_range)
+                self.board.move(car, move)
+
             for car in self.cars: 
                 for i in self.move_range:
                     # check if the move is valid/possible
@@ -60,12 +72,12 @@ class AStar:
                         new_board.move(car, i)
                         new_score = self.calculate_score(new_board)
                         
-                        if new_board.game_won():
-                            self.best_solution = new_board.get_moves()
-                            print(len(self.best_solution))
-                        elif len(new_board.get_moves()) > self.max_moves:
-                            self.remove_loops(new_board.get_moves())
-                        elif new_score < best_score:
+                        # if new_board.game_won():
+                        #     self.best_solution = new_board.get_moves()
+                        #     print(len(self.best_solution))
+                        # elif len(new_board.get_moves()) > self.max_moves:
+                        #     self.remove_loops(new_board.get_moves())
+                        if new_score < best_score:
                             print(new_score, best_score)
                             best_score = new_score
                             best_move = [car, i]    
@@ -79,12 +91,17 @@ class AStar:
                 print(self.board.get_moves())
                 print(self.board.give_board())
                 # input()
+
+                if new_board.game_won():
+                    self.best_solution = self.board.get_moves()
+                    print(len(self.best_solution))
+                    print(self.best_solution)
                 
                 if self.best_solution != None:
                     break
 
     def remove_loops(self, moves):
-        game = deepcopy(self.board)
+        game = Game(self.solution.board_size, self.solution.game_number)
         game_boards = []
         game_boards.append(game.give_board())
 
