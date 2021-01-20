@@ -24,9 +24,12 @@ class BreadthFirst:
 
         self.best_solution = None
 
+        self.queue = 0
+
         self.create_solution()
 
 
+<<<<<<< Updated upstream
     def add_to_archive(self, game):
         if game.give_board() not in self.row1 or self.row2 or self.current_row:
             self.state_keys.append(game.give_board())
@@ -61,6 +64,13 @@ class BreadthFirst:
         #     self.states.clear() 
         #     for node in self.clean:
         #         self.states[node[0]] = node[1]
+=======
+    def get_next_state(self):
+        # return self.states.pop(0)
+        key = self.state_keys.pop(0)
+        print(f" Queue length: {len(self.state_keys)}")
+        return self.states[key]
+>>>>>>> Stashed changes
 
 
     def create_solution(self): 
@@ -87,6 +97,7 @@ class BreadthFirst:
                     if game_node.valid_move(car, i):
                         if game_node.get_moves() and [car,-i] == game_node.get_moves()[-1]:
                             break
+<<<<<<< Updated upstream
                         
                         self.build_child(game_node, car, i)
 
@@ -110,6 +121,25 @@ class BreadthFirst:
 
 
     def build_child(self, game_node, car, move):
+=======
+                        # make a new state
+                        new_game_state = copy.deepcopy(game_state)
+                        # move the car
+                        new_game_state.move(car, i)
+
+                        # check if it is a solution
+                        if new_game_state.game_won():
+                            self.best_solution = new_game_state.get_moves()
+                        else:
+                            if new_game_state.give_board() not in self.states:
+                                self.queue += 1
+                                print(f"Added to Queue: {self.queue}")
+                                self.state_keys.append(new_game_state.give_board())
+                                self.states[new_game_state.give_board()] = new_game_state
+                            # self.states.append(new_game_state)
+    
+    def create_solution(self): # moet dit in main.py of in de init worden aangeroepen?
+>>>>>>> Stashed changes
         """
         Creates all possible child-states and adds them to the list of states
         """
@@ -119,6 +149,7 @@ class BreadthFirst:
         # move the car
         new_node.move(car, move)
 
+<<<<<<< Updated upstream
         # check if it is a solution
         if new_node.game_won():
             self.best_solution = new_node.get_moves()
@@ -135,6 +166,14 @@ class BreadthFirst:
         for car_id in game_node.cars:
             car = game_node.cars[car_id]
             info.append(f"{car.id},{car.orientation},{car.col},{car.row},{car.length}")
+=======
+        while self.state_keys:
+        # while self.states:
+            count += 1
+            new_state = self.get_next_state()
+            if count % 5 == 0:
+                print(len(new_state.get_moves()))
+>>>>>>> Stashed changes
 
         moves = game_node.get_moves()
         return [info, moves]        
