@@ -40,8 +40,8 @@ class AStar:
             else:
                 score += abs(self.solution.cars[car].row - game.cars[car].row)
             
-            if game.give_board() in self.states:
-                score += 10
+            # if game.give_board() in self.states:
+            #     score += 10
 
         # print(score)
         return score
@@ -49,7 +49,9 @@ class AStar:
     def shorten_solution(self):
         while True:
             best_score = float('inf')
+            ni_score = float('inf')
             best_move = None
+            valid_moves = 0
 
             if len(self.board.get_moves()) >= self.max_moves:
                 print("loops verwijderen")
@@ -65,14 +67,19 @@ class AStar:
                         self.board.move(car, move)
                         break
 
+            # already_tried = False
+            
             for car in self.cars: 
                 for i in self.move_range:
                     # check if the move is valid/possible
                     if self.board.valid_move(car, i):
+                        valid_moves += 1
                         if self.board.get_moves() and [car,-i] == self.board.get_moves()[-1]:
-                            break
+                            continue
                         new_board = Game(self.solution.board_size, self.solution.game_number, deepcopy(self.get_node_data(self.board)))
                         new_board.move(car, i)
+                        # if new_board.give_board() in self.states:
+                        #    continue
                         new_score = self.calculate_score(new_board)
                         
                         # if new_board.game_won():
@@ -80,15 +87,17 @@ class AStar:
                         #     print(len(self.best_solution))
                         # elif len(new_board.get_moves()) > self.max_moves:
                         #     self.remove_loops(new_board.get_moves())
-                        if new_score < best_score:
+                        if new_score < best_score and new_board.give_board() not in self.states:
                             print(new_score, best_score)
                             best_score = new_score
                             best_move = [car, i]    
-                        else:
-                            continue
+                        elif new_score < ni_score and new_board.give_board() in self.states:
+                            # print("new repeat move found")
+                            ni_score = new_score
+                            ni_move = [car, i]
                             
             if best_move:
-                self.score = best_score
+                # self.score = best_score
                 self.board.move(*best_move)
                 self.add_to_archive(self.board)
                 print(self.board.get_moves())
@@ -102,6 +111,14 @@ class AStar:
                 
                 if self.best_solution != None:
                     break
+            elif valid_moves == 1:
+                back_track = self.get_moves()[-1]
+                self.board.move(*back_track)
+                print("backtracked")
+            else:
+                self.board.move(*ni_move)
+
+            
 
     def remove_loops(self, moves):
         game = Game(self.solution.board_size, self.solution.game_number)
