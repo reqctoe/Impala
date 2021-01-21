@@ -26,7 +26,7 @@ class Random_repeater():
                 print(len(new_solution))
                 self.best_solution = new_solution
                 self.best_game = self.game
-            if i % 100 == 0:
+            if i % 500 == 0:
                 print(f"We are at {i} tries!")
 
         # print(self.best_solution)
