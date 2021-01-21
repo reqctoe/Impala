@@ -15,11 +15,11 @@ class Random_loopcutter_breadthfirst:
     def __init__(self, game):
         self.game = deepcopy(game)
 
-        # get best solutions out of 1000 random tries using Random_repeater
+        # get solution using Random_repeater
         self.random_repeater = Random_repeater_adjusted(self.game.board_size, self.game.game_number)
         self.solution = self.random_repeater.give_solution()
 
-        # cut loops of every solution an keep save shortest result
+        # cut loops
         self.cut_solution = self.loopcutter(self.solution)
 
     def loopcutter(self, solution):
@@ -45,7 +45,7 @@ class Random_loopcutter_breadthfirst:
                     del solution[board_indices[0]: board_indices[-1]]
                     print(f"Removed move {board_indices[0]} to {board_indices[-1]}")
                     break
-            # when no duplicates are found anymore, stop cutting
+            # when all unique states are checked and no duplicates are found anymore, stop cutting
             else:
                 break
 
