@@ -84,7 +84,7 @@ class Breadthfirst_improver:
     
     def __init__(self, game):
         self.game = deepcopy(game)
-        self.moves_file = "data/output_files/random_loopcutter_6_67moves.csv"  # DIT KUNNEN WE EVENTUEEL ALS IMPUT DOEN IN COMMAND LINE
+        self.moves_file = "data/output_files/random_loopcutter_5_174moves.csv"  # DIT KUNNEN WE EVENTUEEL ALS IMPUT DOEN IN COMMAND LINE
         self.max_depth = 6                                                      # DIT OOK
         self.solution = []
 
