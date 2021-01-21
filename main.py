@@ -127,7 +127,7 @@ if __name__ == "__main__":
         
         # update output string and perform move
         command_list += f"{command_string}\n"
-        print(game.give_board())
+        # print(game.give_board())
         game.move(*command)
 
 
