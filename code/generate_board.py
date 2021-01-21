@@ -88,6 +88,8 @@ class GenerateBoard:
         tile_id = col + (row - 1) * self.board_size
 
         if orientation == 'H':
+            if row == ceil(self.board_size / 2):
+                return False
             for tile in range(tile_id, tile_id + length):
                 if self.tiles[tile].occupied:
                     return False
