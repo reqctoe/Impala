@@ -34,7 +34,10 @@ if __name__ == "__main__":
     # OM NIEUW BORD TE GENEREREN, NOG BESPREKEN HOE WE DIT WILLEN DOEN
     print("Do you want to generate a random new board?")
     answer = input("> ")
-    
+
+    board_size = None
+    game_number = None
+    game = None
     if answer == 'yes' or answer == 'y':
         print("What size board do you want?") 
         board_size = input("> ")
@@ -50,13 +53,13 @@ if __name__ == "__main__":
         
         # generate a new gameboard file if the user want to generate a random new board
         GenerateBoard(board_size, game_number)
-
+    
         game = Game(board_size, game_number)
         print(game.give_board())
-    
-    # load game
-    game_number, board_size = argv[1], argv[2]
-    game = Game(board_size, game_number)
+    else:
+        # load game
+        game_number, board_size = argv[1], argv[2]
+        game = Game(board_size, game_number)
     
     # ask user what algorithm they want to run
     print("Type the number of the algorithm that you want to run")
@@ -122,6 +125,7 @@ if __name__ == "__main__":
 
     # ask algorithm for input
     while True:
+        print(algorithm)
         command_string = algorithm.get_command()
         command_count += 1
         
