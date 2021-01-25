@@ -45,7 +45,7 @@ class BreadthFirst_adjusted(BreadthFirst):
                     print(new_state_data[1])
                     break
 
-            game_node = Game(self.game.board_size, self.game.game_number, new_state_data)
+            game_node = Game(self.game.board_size, self.game.game_number, new_state_data) # VOOR DIE BOARD SIZE EVEN EEN APARTE METHOD MAKEN IN GAME
             
 
             if count % 100 == 0:
@@ -60,17 +60,15 @@ class BreadthFirst_adjusted(BreadthFirst):
                             continue
                         self.build_child(game_node, car, i)
 
-                    if self.best_solution != None:
+                    if self.best_solution != None:                          # DIT IN APARTE FUNCTIE DOEN ZODAT JE NIET 3X HOEFT TE BREAKEN
                         print(f"found a solution: {self.best_solution}")
                         break
 
                 if self.best_solution != None:
-                    print(f"found a solution: {self.best_solution}")
                     break
             
             if self.best_solution != None:
-                    print(f"found a solution: {self.best_solution}")
-                    break
+                break
 
         print(f"Number of keys when breaking out of breadthfirst: {len(self.state_keys)}")
 
@@ -125,7 +123,7 @@ class Breadthfirst_improver:
 
         self.game_boards_total_length = len(self.game_boards)
         self.game_boards = self.game_boards[self.max_depth + 2:]
-        print(self.game_boards)
+        # print(self.game_boards)
         # check for every board if there is a route to one of the other boards that is more than the max depth away
         step_counter = 0
 
@@ -146,7 +144,6 @@ class Breadthfirst_improver:
                 print(self.solution)
                 self.solution[step_counter: (self.game_boards_total_length - len(self.game_boards) + index)] = partial_solution
                 print(self.solution)
-
                 break
 
             self.game_boards.pop(0)
