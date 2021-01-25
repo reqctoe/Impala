@@ -60,6 +60,10 @@ class BreadthFirst_adjusted(BreadthFirst):
                             continue
                         self.build_child(game_node, car, i)
 
+                    if self.best_solution != None:
+                        print(f"found a solution: {self.best_solution}")
+                        break
+
                 if self.best_solution != None:
                     print(f"found a solution: {self.best_solution}")
                     break

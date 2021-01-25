@@ -16,30 +16,32 @@ from sys import argv
 
 if __name__ == "__main__":
 
-    # # check if command line arguments are given
-    # if len(argv) != 3:
-    #     print("Usage: python main.py [game_number] [board_size]")
-    #     exit(1)
+    # check if command line arguments are given
+    if len(argv) != 3:
+        print("Usage: python main.py [game_number] [board_size]")
+        exit(1)
     
-    # # check game number
-    # if int(argv[1]) not in range(1, 8):
-    #     print("Invalid game number")
-    #     exit(1)
+    # check game number
+    if int(argv[1]) not in range(1, 8):
+        print("Invalid game number")
+        exit(1)
 
-    # # check board size
-    # if int(argv[2]) not in [6, 9, 12]:
-    #     print("Invalid board size")
-    #     exit(1)
+    # check board size
+    if int(argv[2]) not in [6, 9, 12]:
+        print("Invalid board size")
+        exit(1)
 
     # OM NIEUW BORD TE GENEREREN, NOG BESPREKEN HOE WE DIT WILLEN DOEN
     print("Do you want to generate a random new board?")
     answer = input("> ")
-    print("What size board do you want?") 
-    board_size = input("> ")
-    print("What is the number of the game?") # NIET NUMMER WAT AL BESTAAT
-    game_number = input("> ")
     
     if answer == 'yes' or answer == 'y':
+        print("What size board do you want?") 
+        board_size = input("> ")
+        print("What is the number of the game?") # NIET NUMMER WAT AL BESTAAT
+        game_number = input("> ")
+
+
         while True:
             if int(game_number) not in range(1,8):
                 break
@@ -49,15 +51,12 @@ if __name__ == "__main__":
         # generate a new gameboard file if the user want to generate a random new board
         GenerateBoard(board_size, game_number)
 
-    game = Game(board_size, game_number)
-    print(game.give_board())
+        game = Game(board_size, game_number)
+        print(game.give_board())
     
-    # # load game
-    # game_number, board_size = argv[1], argv[2]
-    # game = Game(board_size, game_number)
-
-    # # load algorithm
-    # algorithm = BreadthFirst(game)
+    # load game
+    game_number, board_size = argv[1], argv[2]
+    game = Game(board_size, game_number)
     
     # ask user what algorithm they want to run
     print("Type the number of the algorithm that you want to run")
