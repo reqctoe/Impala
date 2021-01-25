@@ -48,7 +48,7 @@ class BreadthFirst:
                     # check if the move is valid/possible
                     if game_node.valid_move(car, i):
                         if game_node.get_moves() and [car,-i] == game_node.get_moves()[-1]:
-                            break
+                            continue
                         self.build_child(game_node, car, i)
 
                 if self.best_solution != None:

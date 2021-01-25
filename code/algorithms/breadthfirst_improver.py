@@ -6,10 +6,11 @@ from code.classes.game import Game
 
 class BreadthFirst_adjusted(BreadthFirst):
 
-    def __init__(self, game, boards, max_depth):
+    def __init__(self, game, boards, max_depth, step):
         self.boards = boards
         self.game = deepcopy(game)
         self.max_depth = max_depth
+        self.step = step
 
         # initiate archive
         self.state_keys = [self.game.give_board()]
@@ -40,25 +41,34 @@ class BreadthFirst_adjusted(BreadthFirst):
          
             # stop if max depth has been reached
             if count > 100:
-                if len(new_state_data[1]) > self.max_depth:
+                if len(new_state_data[1]) > (self.max_depth + self.step):
+                    print(new_state_data[1])
                     break
 
             game_node = Game(self.game.board_size, self.game.game_number, new_state_data)
             
 
             if count % 100 == 0:
-                print(f"ROW:{len(new_state_data[1])}")
+                print(f"ROW:{(len(new_state_data[1]) - self.step)}")
+                print(f"number of keys: {len(self.state_keys)}")
 
             for car in self.cars: 
                 for i in self.move_range:
                     # check if the move is valid/possible
                     if game_node.valid_move(car, i):
                         if game_node.get_moves() and [car,-i] == game_node.get_moves()[-1]:
-                            break
+                            continue
                         self.build_child(game_node, car, i)
 
                 if self.best_solution != None:
+                    print(f"found a solution: {self.best_solution}")
                     break
+            
+            if self.best_solution != None:
+                    print(f"found a solution: {self.best_solution}")
+                    break
+
+        print(f"Number of keys when breaking out of breadthfirst: {len(self.state_keys)}")
 
     def build_child(self, game_node, car, move):
         """
@@ -69,11 +79,15 @@ class BreadthFirst_adjusted(BreadthFirst):
         new_node = Game(self.game.board_size, self.game.game_number, deepcopy(self.get_node_data(game_node)))
         # move the car
         new_node.move(car, move)
-
+        # print([new_node.give_board()])
         # check if it is a solution
-        if new_node.give_board in self.boards:
+        if [new_node.give_board()] in self.boards:
+            print("FOUND ONE!!!")
+            # print(self.boards)
+            # print([new_node.give_board()])
+
             self.best_solution = new_node.get_moves()
-            self.index = self.boards.index(new_node.give_board)  
+            self.index = self.boards.index([new_node.give_board()])  
         else:
             self.add_to_archive(new_node)
 
@@ -84,8 +98,8 @@ class Breadthfirst_improver:
     
     def __init__(self, game):
         self.game = deepcopy(game)
-        self.moves_file = "data/output_files/random_loopcutter_5_174moves.csv"  # DIT KUNNEN WE EVENTUEEL ALS IMPUT DOEN IN COMMAND LINE
-        self.max_depth = 6                                                      # DIT OOK
+        self.moves_file = "data/output_files/breadthfirst_improver_6_57moves61.csv"  # DIT KUNNEN WE EVENTUEEL ALS IMPUT DOEN IN COMMAND LINE
+        self.max_depth = 6                                                   # DIT OOK
         self.solution = []
 
         # load solution from file
@@ -99,33 +113,40 @@ class Breadthfirst_improver:
         # make a list with all the states of the board
         game_for_boards = deepcopy(self.game)
         self.game_boards = []
-        self.game_boards.append(game_for_boards.give_board())
+        self.game_boards.append([game_for_boards.give_board()])
 
         for move in self.solution:
             game_for_boards.move(*move)
-            self.game_boards.append(game_for_boards.give_board())
+            self.game_boards.append([game_for_boards.give_board()])
 
-        self.gameboards = self.game_boards[self.max_depth + 1:]
-
+        self.game_boards_total_length = len(self.game_boards)
+        self.game_boards = self.game_boards[self.max_depth + 2:]
+        print(self.game_boards)
         # check for every board if there is a route to one of the other boards that is more than the max depth away
         step_counter = 0
 
         while True:
+            print(f"game board length: {len(self.game_boards)}")
             if not self.game_boards:
                 break
             
             print(f"Checking board {step_counter + 1}")
 
-            breadthfirst = BreadthFirst_adjusted(self.game, self.gameboards, self.max_depth)
+            breadthfirst = BreadthFirst_adjusted(self.game, self.game_boards, self.max_depth, step_counter)
 
             partial_solution, index = breadthfirst.give_solution()
-
+            print(partial_solution)
+            print(index)
             if partial_solution:
                 # replace that piece of code in the solution
-                self.solution[step_counter: index - 1] = partial_solution
+                print(self.solution)
+                self.solution[step_counter: (self.game_boards_total_length - len(self.game_boards) + index)] = partial_solution
+                print(self.solution)
 
                 break
 
+            self.game_boards.pop(0)
+            self.game.move(*self.solution[step_counter])
             step_counter += 1
 
     def get_command(self):
