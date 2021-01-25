@@ -19,14 +19,14 @@ class Random_repeater():
         self.best_solution = [] # deze kunnen we ook nog verbeteren met heen en weer moves weghalen
         self.best_game = None
 
-        for i in range(100):
+        for i in range(1000):
             self.game = Game(self.board_size, self.game_number)
             new_solution = self.create_solution()
             if new_solution:
                 print(len(new_solution))
                 self.best_solution = new_solution
                 self.best_game = self.game
-            if i % 1000 == 0:
+            if i % 500 == 0:
                 print(f"We are at {i} tries!")
 
         # print(self.best_solution)

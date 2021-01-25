@@ -54,8 +54,15 @@ class GenerateBoard:
         # add car X to the list of cars
         self.cars.append([car_id_x,orientation_x,col_x,row_x,length_x])
 
+        if self.board_size == 6:
+            car_amount = range(7,15)
+        elif self.board_size == 9:
+            car_amount = range(20, 26)
+        elif self.board_size == 12:
+            car_amount = range(30,50)
+
         # generate the rest of the cars
-        for i in range(choice(range(5,10))): # NOG AANPASSEN, AANTAL AUTO'S NOG BEPALEN
+        for i in range(choice(car_amount)): # NOG AANPASSEN, AANTAL AUTO'S NOG BEPALEN
             car_id = chr(i + 65)
             orientation = choice(["H", "V"])
             length = choice([2, 3])
@@ -88,6 +95,8 @@ class GenerateBoard:
         tile_id = col + (row - 1) * self.board_size
 
         if orientation == 'H':
+            if row == ceil(self.board_size / 2):
+                return False
             for tile in range(tile_id, tile_id + length):
                 if self.tiles[tile].occupied:
                     return False

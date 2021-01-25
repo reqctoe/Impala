@@ -1,4 +1,3 @@
-
 from copy import deepcopy
 
 from code.classes.game import Game
@@ -100,5 +99,3 @@ class BreadthFirst:
         command_list = self.best_solution.pop(0)
         car, move = command_list[0:2]
         return f"{car},{move}"
-        
-            
