@@ -13,7 +13,7 @@ class BreadthFirst_adjusted(BreadthFirst):
         self.step = step
 
         # initiate archive
-        self.state_keys = [self.game.give_board()]
+        self.state_keys = [] #self.game.give_board()
         self.states = {}
         self.add_to_archive(game)
         
@@ -50,7 +50,7 @@ class BreadthFirst_adjusted(BreadthFirst):
 
             if count % 100 == 0:
                 print(f"ROW:{(len(new_state_data[1]) - self.step)}")
-                print(f"number of keys: {len(self.state_keys)}")
+                # print(f"number of keys: {len(self.state_keys)}")
 
             for car in self.cars: 
                 for i in self.move_range:
@@ -100,7 +100,7 @@ class Breadthfirst_improver:
     
     def __init__(self, game):
         self.game = deepcopy(game)
-        self.moves_file = "data/output_files/breadthfirst_improver_6_57moves61.csv"  # DIT KUNNEN WE EVENTUEEL ALS IMPUT DOEN IN COMMAND LINE
+        self.moves_file = "data/output_files/breadthfirst_improver_6_52moves54.csv"  # DIT KUNNEN WE EVENTUEEL ALS IMPUT DOEN IN COMMAND LINE
         self.max_depth = 6                                                   # DIT OOK
         self.solution = []
 
@@ -134,6 +134,7 @@ class Breadthfirst_improver:
             
             print(f"Checking board {step_counter + 1}")
 
+            print(f"moves van game waarmee ie de breadthfirst ingaat: {self.game.get_moves()}")
             breadthfirst = BreadthFirst_adjusted(self.game, self.game_boards, self.max_depth, step_counter)
 
             partial_solution, index = breadthfirst.give_solution()
@@ -142,7 +143,7 @@ class Breadthfirst_improver:
             if partial_solution:
                 # replace that piece of code in the solution
                 print(self.solution)
-                self.solution[step_counter: (self.game_boards_total_length - len(self.game_boards) + index)] = partial_solution
+                self.solution[: (self.game_boards_total_length - len(self.game_boards) + index)] = partial_solution
                 print(self.solution)
                 break
 
