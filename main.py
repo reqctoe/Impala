@@ -22,9 +22,9 @@ if __name__ == "__main__":
         exit(1)
     
     # check game number
-    if int(argv[1]) not in range(1, 8):
-        print("Invalid game number")
-        exit(1)
+    # if int(argv[1]) not in range(1, 8):
+    #     print("Invalid game number")
+    #     exit(1)
 
     # check board size
     if int(argv[2]) not in [6, 9, 12]:
@@ -125,7 +125,6 @@ if __name__ == "__main__":
 
     # ask algorithm for input
     while True:
-        print(algorithm)
         command_string = algorithm.get_command()
         command_count += 1
         
