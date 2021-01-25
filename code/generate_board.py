@@ -14,10 +14,11 @@ class GenerateBoard:
         self.board_size = int(board_size)
         self.game_number = int(game_number)
 
-        self.tiles = {}
-        self.load_tiles()
 
         while True:
+            self.tiles = {}
+            self.load_tiles()
+            self.tiles_occupied = 0
             # place all the cars
             self.cars = []
             self.generate_cars()
@@ -56,25 +57,44 @@ class GenerateBoard:
         car_x.occupies_tiles(self.board_size)
         for tile in car_x.tiles:
             self.tiles[tile].set_occupied()
+            self.tiles_occupied += 1
 
         # add car X to the list of cars
         self.cars.append([car_id_x,orientation_x,col_x,row_x,length_x])
 
         if self.board_size == 6:
-            car_amount = range(7,15)
+            car_amount = choice(range(9,15))
         elif self.board_size == 9:
-            car_amount = range(20, 26)
+            car_amount = choice(range(20, 26))
         elif self.board_size == 12:
-            car_amount = range(30,50)
+            car_amount = choice(range(30,50))
+        
+        print(f"aantal autos: {car_amount}")
 
         # generate the rest of the cars
-        for i in range(choice(car_amount)): # NOG AANPASSEN, AANTAL AUTO'S NOG BEPALEN
-            car_id = chr(i + 65)
+        for i in range(car_amount - 1): # NOG AANPASSEN, AANTAL AUTO'S NOG BEPALEN
+            if self.tiles_occupied >= len(self.tiles) * 0.75:
+                break
+            
+            car_id = None
+            if i < 23:
+                car_id = chr(i + 65)
+            elif 23 <= i < 25:
+                car_id = chr(i + 66)
+            elif i >= 25:
+                car_id = 'A' + chr(i -25 + 65)
+            
             orientation = choice(["H", "V"])
             length = choice([2, 3])
 
             # get the column and row
+            j = 0
             while True:
+                j += 1
+                if j >= 100:
+                    print(f"autos geplaats: {len(self.cars)}")
+                    break
+                
                 if orientation == 'H':
                     col = choice(range(1, self.board_size - (length - 1) + 1))
                     row = choice(range(1, self.board_size + 1))
@@ -89,11 +109,14 @@ class GenerateBoard:
                     car.occupies_tiles(self.board_size)
                     for tile in car.tiles:
                         self.tiles[tile].set_occupied()
+                        self.tiles_occupied += 1
 
                     # add the car to the list of cars
                     self.cars.append([car_id,orientation,col,row,length])
-                    print(self.cars)
                     break
+                # else:
+                #     als ie false is
+                #     voeg toe aan niet mogelijk lijst, zorg dat ie die niet nog een keer pakt
 
     def check_placement(self, orientation, length, col, row):
         """
@@ -126,6 +149,7 @@ class GenerateBoard:
     def check_solvability(self):
         print("checking if board is correct")
         game = Game(self.board_size, self.game_number)
+        print(game.give_board())
         algorithm = Baseline(self.board_size, self.game_number)
         command_count = 0
 
@@ -146,6 +170,8 @@ class GenerateBoard:
             
             if command_count >= 3000000:
                 print("unsolvable board")
+                print(game.give_board())
+                input()
                 break
 
         return False
