@@ -35,25 +35,32 @@ class BreadthFirst:
         count = 0
 
         while self.state_keys:
+            print(len(self.state_keys))
             count += 1
             new_state_data = self.get_next_state()
             game_node = Game(self.game.board_size, self.game.game_number, new_state_data)
-            
+            # print(game_node.get_moves())
+            # input()
+
             if count % 100 == 0:
                 print(f"ROW:{len(new_state_data[1])}")
 
             for car in self.cars: 
+                if car == game_node.get_moves()[-1][0]:
+                    continue
+
                 for i in self.move_range:
                     # check if the move is valid/possible
                     if game_node.valid_move(car, i):
-                        if game_node.get_moves() and [car,-i] == game_node.get_moves()[-1]:
-                            continue
+                        # if game_node.get_moves() and [car,-i] == game_node.get_moves()[-1]: # KAN MAKKELIJKER
+                        #     # if car 
+                        #     break
                         self.build_child(game_node, car, i)
 
-                if self.best_solution != None:
-                    break
-
-
+                    if self.best_solution != None:
+                        return
+        
+    
     def get_next_state(self):
         key = self.state_keys.pop(0)
         
@@ -77,7 +84,7 @@ class BreadthFirst:
         # check if it is a solution
         if new_node.game_won():
             self.best_solution = new_node.get_moves()
-            print(len(self.best_solution))
+            print(f"gewonnen: {len(self.best_solution)}")
         else:
             self.add_to_archive(new_node)
 

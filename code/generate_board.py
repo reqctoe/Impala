@@ -2,6 +2,8 @@ from .classes.game import Game
 from .classes.car import Car
 from .classes.tile import Tile
 
+from .algorithms.baseline_algorithm import Baseline
+
 from random import choice
 from math import ceil
 import csv
@@ -15,12 +17,15 @@ class GenerateBoard:
         self.tiles = {}
         self.load_tiles()
 
-        # place all the cars
-        self.cars = []
-        self.generate_cars()
+        while True:
+            # place all the cars
+            self.cars = []
+            self.generate_cars()
 
-        # make output csv file
-        self.get_configuration()
+            # make output csv file
+            self.get_configuration()
+            if self.check_solvability():
+                break
 
     def load_tiles(self):
         """
@@ -38,6 +43,7 @@ class GenerateBoard:
         """
         Generates a list of cars and their position on the board
         """
+        print("generating cars")
         # generate car X
         car_id_x = 'X'
         orientation_x = 'H'
@@ -86,6 +92,7 @@ class GenerateBoard:
 
                     # add the car to the list of cars
                     self.cars.append([car_id,orientation,col,row,length])
+                    print(self.cars)
                     break
 
     def check_placement(self, orientation, length, col, row):
@@ -115,3 +122,30 @@ class GenerateBoard:
             writer = csv.writer(outputfile)
             writer.writerow(["car", "orientation", "col", "row", "length"])
             writer.writerows(self.cars)
+
+    def check_solvability(self):
+        print("checking if board is correct")
+        game = Game(self.board_size, self.game_number)
+        algorithm = Baseline(self.board_size, self.game_number)
+        command_count = 0
+
+        while True:
+            command_string = algorithm.get_command()
+            command_count += 1
+            
+            # check if move is valid
+            command = command_string.split(",")
+            
+            if not game.valid_move(*command):
+                continue
+            
+            game.move(*command)
+            # exit when game is won
+            if game.game_won():
+                return True
+            
+            if command_count >= 3000000:
+                print("unsolvable board")
+                break
+
+        return False
