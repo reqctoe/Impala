@@ -35,7 +35,7 @@ class BreadthFirst:
         count = 0
 
         while self.state_keys:
-            print(len(self.state_keys))
+            # print(len(self.state_keys))
             count += 1
             new_state_data = self.get_next_state()
             game_node = Game(self.game.board_size, self.game.game_number, new_state_data)
@@ -46,7 +46,7 @@ class BreadthFirst:
                 print(f"ROW:{len(new_state_data[1])}")
 
             for car in self.cars: 
-                if car == game_node.get_moves()[-1][0]:
+                if game_node.get_moves() and car == game_node.get_moves()[-1][0]:
                     continue
 
                 for i in self.move_range:
