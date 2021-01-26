@@ -117,7 +117,7 @@ class AStar:
                 if self.best_solution != None:
                     break
             elif valid_moves == 1:
-                back_track = self.get_moves(self.board)[-1]
+                back_track = self.board.get_moves(self.board)[-1]
                 self.board.move(*back_track)
                 print("backtracked")
             else:
