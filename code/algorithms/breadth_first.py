@@ -59,7 +59,6 @@ class BreadthFirst:
                 # if used in breadthfirst improver, subtract number of steps taken
                 print(f"Depth:{(len(new_state_data[1]) - step_counter)}")
 
-
             # check all cars
             for car in self.cars:
                 # skip last car that has been moved

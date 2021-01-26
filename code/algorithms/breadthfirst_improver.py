@@ -4,7 +4,7 @@ from code.algorithms.breadth_first import BreadthFirst
 from code.classes.game import Game
 
 # constants
-MAX_DEPTH = 4
+MAX_DEPTH = 3
 
 
 class BreadthFirst_adjusted(BreadthFirst):
@@ -52,7 +52,10 @@ class BreadthFirst_adjusted(BreadthFirst):
             self.best_solution = new_node.get_moves()
             self.index = self.boards.index([new_node.give_board()])  
         else:
-            self.add_to_archive(new_node)
+            # print(new_node.get_moves())
+            if len(new_node.get_moves()) < (self.max_depth + self.step_counter):
+                # print(new_node.get_moves())
+                self.add_to_archive(new_node)
 
     def give_solution(self):
         return self.best_solution, self.index
@@ -61,7 +64,7 @@ class Breadthfirst_improver:
     
     def __init__(self, game):
         self.game = deepcopy(game)
-        self.solution_file = "data/output_files/breadthfirst_improver_7_240moves243.csv"
+        self.solution_file = "data/output_files/output.csv"
         self.max_depth = MAX_DEPTH
 
         # load solution that needs to be improved from file
