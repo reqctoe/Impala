@@ -117,7 +117,7 @@ class GenerateBoard:
         # set the tiles the car is on to occupied
         car = Car(car_id, orientation, col, row, length)
         car.occupies_tiles(self.board_size)
-        for tile in car.tiles: # HOE KOM IK HIER OOK ALWEER AAN
+        for tile in car.car_attributes()["tiles"]: 
             self.tiles[tile].set_occupied()
             self.tiles_occupied += 1
 
