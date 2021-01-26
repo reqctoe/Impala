@@ -100,7 +100,7 @@ class Breadthfirst_improver:
     
     def __init__(self, game):
         self.game = deepcopy(game)
-        self.moves_file = "data/output_files/breadthfirst_improver_6_52moves54.csv"  # DIT KUNNEN WE EVENTUEEL ALS IMPUT DOEN IN COMMAND LINE
+        self.moves_file = "data/output_files/output.csv"  # DIT KUNNEN WE EVENTUEEL ALS IMPUT DOEN IN COMMAND LINE
         self.max_depth = 6                                                   # DIT OOK
         self.solution = []
 

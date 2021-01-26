@@ -14,8 +14,7 @@ import csv
 from sys import argv
 
 
-if __name__ == "__main__":
-
+def run_dit(algorithm_number=None):
     # check if command line arguments are given
     if len(argv) != 3:
         print("Usage: python main.py [game_number] [board_size]")
@@ -33,7 +32,7 @@ if __name__ == "__main__":
 
     # OM NIEUW BORD TE GENEREREN, NOG BESPREKEN HOE WE DIT WILLEN DOEN
     print("Do you want to generate a random new board?")
-    answer = input("> ")
+    answer = input("> ") if algorithm_number is None else "no"
 
     board_size = None
     game_number = None
@@ -75,7 +74,8 @@ if __name__ == "__main__":
 
     # keep asking for input until an algorithm is loaded
     while True:
-        algorithm_number = input("> ")
+        if algorithm_number is None:
+            algorithm_number = input("> ")
 
         # make sure an integer value is given
         try:
@@ -152,5 +152,11 @@ if __name__ == "__main__":
             with open('data/output_files/output.csv', 'a') as outputfile:
                 outputfile.write(command_list)
 
-            exit(0)
+            # exit(0)
+            return   
         
+if __name__ == "__main__":
+    algorithm_number = input("> ")
+    for i in range(100):
+        run_dit(algorithm_number=algorithm_number)
+        print(f"run {i} times")
