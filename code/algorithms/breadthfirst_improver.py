@@ -61,7 +61,7 @@ class Breadthfirst_improver:
     
     def __init__(self, game):
         self.game = deepcopy(game)
-        self.solution_file = "data/output_files/output.csv"
+        self.solution_file = "data/output_files/breadthfirst_improver_7_240moves243.csv"
         self.max_depth = MAX_DEPTH
 
         # load solution that needs to be improved from file
