@@ -1,4 +1,0 @@
-
-lister = []    
-print(len(lister))
-
