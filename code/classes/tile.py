@@ -28,5 +28,19 @@ class Tile:
 
         self.occupied = False
 
+    def get_occupied(self):
+        """
+        Gives occupation
+        """
+        return self.occupied
 
+    def tile_attributes(self):
+        """
+        Gives all attributes for the class in a dictionary
+        """
+        return {
+            "id": self.id,
+            "row": self.row,
+            "col": self.col,
+        }
 

@@ -5,58 +5,71 @@ from .random_repeater import Random_repeater
 from code.classes.game import Game
 
 class AStar:
+
     def __init__(self, board_size, game_number):
-        # self.board_size = 
+
+        # create solution with random repeater
         self.solution = Random_repeater(board_size, game_number).get_game()
         self.max_moves = len(self.solution.get_moves())
-        print(self.solution.give_board())
-        print("repeater finished")
         self.board = Game(board_size, game_number)
 
-        # initiate archive
+        # archive
         self.states = {}
         self.add_to_archive(self.board)
 
-        self.move_range = list(range(- self.board.board_size + 2, self.board.board_size - 1))
-        self.move_range.remove(0)
-        self.cars = [x for x in self.board.car_ids]
-
+        # game properties
+        self.move_range = self.board.get_move_range()
+        self.cars = self.board.get_cars()
         self.best_solution = None
-
-        self.score = self.calculate_score(self.board)
-        print(self.score)
-
         self.restart = 0
+
+        # calculate score of starting board
+        self.score = self.calculate_score(self.board)
 
         self.shorten_solution()
 
 
     def calculate_score(self, game):
+        """
+        Calculate board score based on difference between current board and 
+        the winning state from random repeater.
+        """
+        # start with amount of moves performed
         score = len(game.get_moves())
 
+        # compare current car location to location in winning state
         for car in self.solution.cars:
-            if car == "X":
-                score += 4 * abs(self.solution.cars[car].col - game.cars[car].col)
-            elif self.solution.cars[car].orientation == "H":
-                score += abs(self.solution.cars[car].col - game.cars[car].col)
-            else:
-                score += abs(self.solution.cars[car].row - game.cars[car].row)
-            
-            # if game.give_board() in self.states:
-            #     score += 10
+            # retrieve car info for both states
+            solution_info = self.solution.cars[car].car_attributes()
+            game_info = game.cars[car].car_attributes()
 
-        # print(score)
+            # weigh car X more heavily
+            if car == "X":
+                score += 4 * abs(solution_info["col"] - game_info["col"])
+            elif self.solution.cars[car].orientation == "H":
+                score += abs(solution_info["col"] - game_info["col"])
+            else:
+                score += abs(solution_info["row"] - game_info["row"])
+        
         return score
     
+
     def check_length(self):
+        """
+        Check whether more moves have been performed than in the random solution. 
+        If too long, perform loop cutter and continue searching.
+        """
         if len(self.board.get_moves()) >= self.max_moves:
+            # print 
             self.restart += 1
-            print(self.restart)
-            # print("loops verwijderen")
+            print(f"Length checks performed: {self.restart}")
+
+            # perform loop cutter, create new game and perform 
             new_moves = self.remove_loops(self.board.get_moves())
             self.board = Game(self.solution.board_size, self.solution.game_number)
             for move in new_moves:
                 self.board.move(*move)
+            
             
             for i in range(self.restart):
                 while True:
@@ -124,7 +137,6 @@ class AStar:
                 self.board.move(*ni_move)
 
             
-
     def remove_loops(self, moves):
         game = Game(self.solution.board_size, self.solution.game_number)
         game_boards = []
@@ -153,10 +165,12 @@ class AStar:
                 break
 
         return moves
-    
+
+
     def add_to_archive(self, game):
         if game.give_board() not in self.states:
             self.states[game.give_board()] = self.get_node_data(game)
+
 
     def get_node_data(self, game_node):
         """

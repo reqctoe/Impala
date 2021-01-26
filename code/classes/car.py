@@ -16,7 +16,6 @@ class Car():
         """
         Creates list of tiles occupied by car
         """
-        
         self.tiles.clear()
         tile_ID = int((self.row - 1) * dimension + self.col)
         self.tiles.append(tile_ID)
@@ -47,3 +46,17 @@ class Car():
 
         # recalculate tiles occupied by car
         self.occupies_tiles(dimension)
+
+
+    def car_attributes(self):
+        """
+        Gives all attributes for the class in a dictionary
+        """
+        return {
+            "id": self.id,
+            "orientation": self.orientation, 
+            "row": self.row, 
+            "col": self.col, 
+            "length": self.length, 
+            "tiles": self.tiles
+        }
