@@ -6,7 +6,7 @@ it using the algorithm specified by the user.
 # importing all algorithms
 from code.algorithms.random import Random
 from code.algorithms.random_repeater import Random_repeater
-from code.algorithms.breadth_first_recursive import Breadth_first_recursive
+from code.algorithms.iterative_depth_first import Iterative_depth_first
 from code.algorithms.breadth_first import Breadth_first
 from code.algorithms.depth_first import Depth_first
 from code.algorithms.random_loopcutter import Random_loopcutter
@@ -92,7 +92,7 @@ if __name__ == "__main__":
         if algorithm_number == 1:
             algorithm = Random(game)
         elif algorithm_number == 2:
-            algorithm = Breadth_first_recursive(game)
+            algorithm = Iterative_depth_first(game)
         elif algorithm_number == 3:
             algorithm = Breadth_first(game)
         elif algorithm_number == 4:

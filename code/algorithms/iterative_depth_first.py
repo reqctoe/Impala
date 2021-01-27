@@ -3,7 +3,7 @@ from code.classes.game import Game
 from copy import deepcopy
 
 
-class Breadth_first_recursive():
+class Iterative_depth_first():
     """
     This class is used to implement a depth first search with iterative deepening 
     that tries to find a solution for the Rushhour game using a recursive function.
