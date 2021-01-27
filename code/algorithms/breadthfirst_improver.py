@@ -3,7 +3,6 @@ from copy import deepcopy
 from code.algorithms.breadth_first import Breadth_first
 from code.classes.game import Game
 
-# con
 class BreadthFirst_adjusted(Breadth_first):
     """
     This class inherits from the breadthfirst algorithm and contains some

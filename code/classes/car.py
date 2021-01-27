@@ -1,7 +1,7 @@
+
 class Car():
     """
-    Creates car objects with a location, length and orientation.
-    Parameter: car ID (int)
+    Creates car objects with an ID, location, length and orientation.
     """
     
     def __init__(self, car_ID, orientation, col, row, length):

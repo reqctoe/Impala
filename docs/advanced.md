@@ -10,7 +10,7 @@ This gap in difficulty can also be attributed to the amount of cars vs. trucks. 
 What also likely affects the difficulty of a game is the ratio between horizontal and vertical cars. As mentioned before, only when they are both present do they form an obstruction. This means that in order to make a game more complex, a 50:50 ratio of the two is ideal. 
 When considering games 1 and 2, their H:V ratios are 7:5 and 8:4 respectively. The amount of cars and trucks in both games are exactly the same, but in line with the aforementioned, game 1 can be solved in 21 moves and game 2 in 15. 
 
-This pattern can also be recognized when comparing the 9x9 boards as can be sen in the table below
+This pattern can also be recognized when comparing the 9x9 boards as can be seen in the table below:
 
 | Game  | H:V ratio | Solution length  |
 | ----- |-----------| -----------------|
