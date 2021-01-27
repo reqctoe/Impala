@@ -64,12 +64,12 @@ class Breadthfirst_improver:
     specified maximum depth to each state(game board configuration) in the 
     initial solution. If it finds a state that is further away than the maximum
     depth, a shorter solution has been found and will be returned.
-    Parameter: game(Game object).
+    Parameter: game(Game object), max_depth(int), solution_file(string).
     """
 
     def __init__(self, game, max_depth, solution_file):
         self.game = deepcopy(game)
-        self.max_depth = max_depth
+        self.max_depth = int(max_depth)
         self.solution_file = solution_file
 
         # load solution that needs to be improved from file

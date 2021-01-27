@@ -12,9 +12,10 @@ class AStar:
     def __init__(self, game):
 
         # create solution with random repeater
-        self.solution = Random_repeater(board_size, game_number).get_game()
+        self.solution = Random_repeater(game, 100).get_game()
         self.max_moves = len(self.solution.get_moves())
         self.game = deepcopy(game)
+        self.game_info = self.game.get_game_info()
 
         # archive
         self.states = {}
@@ -27,6 +28,7 @@ class AStar:
 
         # calculate score of starting board
         self.score = self.calculate_score(self.game)
+        self.cut_count = 0
 
         self.shorten_solution()
 
@@ -62,15 +64,16 @@ class AStar:
         If too long, perform loop cutter and continue searching.
         """
         if len(self.game.get_moves()) >= self.max_moves:
+            self.cut_count += 1
 
             # perform loop cutter, create new game and perform remaining moves
             new_moves = self.remove_loops(self.game.get_moves())
-            self.game = Game(self.solution.game_size, self.solution.game_number)
+            self.game = Game(self.game_info["board_size"], self.game_info["game_number"])
             for move in new_moves:
                 self.game.move(*move)
             
             # perform random moves for every restart
-            for i in range(self.restart):
+            for i in range(self.cut_count):
                 while True:
                     car = choice(self.cars)
                     move = choice(self.move_range)
@@ -103,7 +106,7 @@ class AStar:
                             continue
                         
                         # make new game and check if move improves score
-                        new_board = Game(self.solution.game_size, self.solution.game_number, deepcopy(self.get_node_data(self.game)))
+                        new_board = Game(self.game_info["board_size"], self.game_info["game_number"], deepcopy(self.get_node_data(self.game)))
                         new_board.move(car, i)
                         new_score = self.calculate_score(new_board)
                         
@@ -143,7 +146,7 @@ class AStar:
         If found, removes all moves in between.
         """
         # recreate current game and perform all moves while saving board configurations
-        game = Game(self.solution.game_size, self.solution.game_number)
+        game = Game(self.game_info["board_size"], self.game_info["game_number"])
         game_boards = []
         game_boards.append(game.give_board())
 
