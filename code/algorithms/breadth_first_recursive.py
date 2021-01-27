@@ -4,18 +4,16 @@ from copy import deepcopy
 from code.classes.game import Game
 
 
-class Test_alg_2():
+class Breadth_first_recursive():
     
     def __init__(self, game):
+
         # get game variables
         game_info = game.get_game_info()
         self.board_size = game_info["board_size"]
         self.game_number = game_info["game_number"]
-        self.board_file = f"data/gameboards/Rushhour{self.board_size}x{self.board_size}_{self.game_number}.csv"
-    
+        self.board_file = f"data/gameboards/Rushhour{self.board_size}x{self.board_size}_{self.game_number}.csv"  
         self.cars = game.get_cars()
-        # self.load_cars(self.board_file)
-
         self.moves = game.get_move_range()
 
         self.depth = 0

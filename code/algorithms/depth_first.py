@@ -1,10 +1,10 @@
-from .breadth_first import BreadthFirst
+from .breadth_first import Breadth_first
 from code.classes.game import Game
 
 import copy
 
 
-class DepthFirst(BreadthFirst):
+class Depth_first(Breadth_first):
 
     def get_next_state(self):
         """

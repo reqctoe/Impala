@@ -1,13 +1,13 @@
 from copy import deepcopy
 
-from code.algorithms.breadth_first import BreadthFirst
+from code.algorithms.breadth_first import Breadth_first
 from code.classes.game import Game
 
 # constants
 MAX_DEPTH = 3
 
 
-class BreadthFirst_adjusted(BreadthFirst):
+class BreadthFirst_adjusted(Breadth_first):
     """
         This class inherits from the breadthfirst algorithm and contains some
         adjustments to make it suitable to improve an existing solution with
@@ -33,7 +33,7 @@ class BreadthFirst_adjusted(BreadthFirst):
         self.index = None
         self.best_solution = None
 
-        self.create_solution()
+        self.run_breadth_first()
 
 
     def build_child(self, game_node, car, move):

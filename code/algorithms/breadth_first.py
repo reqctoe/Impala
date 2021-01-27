@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from code.classes.game import Game
 
-class BreadthFirst:
+class Breadth_first:
     """
     This class is used to implement the breadth first algorithm to solve
     the Rushhour game. Parameter: game(Game object)

@@ -6,15 +6,15 @@ it using the algorithm specified by the user.
 # importing all algorithms
 from code.algorithms.random import Random
 from code.algorithms.random_repeater import Random_repeater
-from code.algorithms.test_alg_2 import Test_alg_2
-from code.algorithms.breadth_first import BreadthFirst
-from code.algorithms.depth_first import DepthFirst
+from code.algorithms.breadth_first_recursive import Breadth_first_recursive
+from code.algorithms.breadth_first import Breadth_first
+from code.algorithms.depth_first import Depth_first
 from code.algorithms.random_loopcutter import Random_loopcutter
 from code.algorithms.astar import AStar
 from code.algorithms.breadthfirst_improver import Breadthfirst_improver
-from code.generate_board import GenerateBoard
 
 from code.classes.game import Game
+from code.generate_board import GenerateBoard
 
 import csv
 import os
@@ -27,14 +27,6 @@ if __name__ == "__main__":
     if len(argv) != 3:
         print("Usage: python main.py [game_number] [board_size]")
         exit(1)
-    
-    """
-    dit kan denk ik weg, omdat je meerdere bord nummers kunt hebben
-    """
-    # check game number
-    # if int(argv[1]) not in range(1, 8):
-    #     print("Invalid game number")
-    #     exit(1)
 
     # check board size
     if int(argv[2]) not in [6, 9, 12]:
@@ -72,14 +64,13 @@ if __name__ == "__main__":
     # ask user what algorithm they want to run
     print("Type the number of the algorithm that you want to run")
     print("1 random: Fills in random moves")
-    print("2 random repeater: tries to fill in random moves to win the game repeatedly")
-    print("3 test alg 2: breadth first without heuristics")
-    print("4 breadth first: breadth first with dictionary heuristic")
-    print("5 depth first: depth first")
+    print("2 breadth first recursive: breadth first without heuristics")
+    print("3 breadth first: breadth first with dictionary heuristic")
+    print("4 depth first: depth first")                         # HIER MOET MISSCHIEN NOG WAT AANGEVULD
+    print("5 random repeater: tries to fill in random moves to win the game repeatedly")
     print("6 random loopcutter: removes loops from random solution")
     print("7 A*: random combined with A*")
     print("8 breadthfirst improver: improves an existing solution with breadthfirst")
-
 
     # keep asking for input until an algorithm is loaded
     while True:
@@ -96,13 +87,13 @@ if __name__ == "__main__":
         if algorithm_number == 1:
             algorithm = Random(game)
         elif algorithm_number == 2:
-            algorithm = Random_repeater(game)
+            algorithm = Breadth_first_recursive(game)
         elif algorithm_number == 3:
-            algorithm = Test_alg_2(board_size, game_number)
+            algorithm = Breadth_first(game)
         elif algorithm_number == 4:
-            algorithm = BreadthFirst(game)
+            algorithm = Depth_first(game)
         elif algorithm_number == 5:
-            algorithm = DepthFirst(game)
+            algorithm = Random_repeater(game)
         elif algorithm_number == 6:
             algorithm = Random_loopcutter(game)
         elif algorithm_number == 7:
