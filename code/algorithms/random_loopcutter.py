@@ -1,6 +1,5 @@
 from copy import deepcopy
 
-from code.classes.game import Game
 from code.algorithms.random_repeater import Random_repeater
 
 

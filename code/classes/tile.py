@@ -1,5 +1,3 @@
-
-
 class Tile:
     """
     This class is used to create tiles for the Rush Hour board.
