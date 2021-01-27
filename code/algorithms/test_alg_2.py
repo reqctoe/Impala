@@ -6,15 +6,18 @@ from code.classes.game import Game
 
 class Test_alg_2():
     
-    def __init__(self, board_size, game_number):
-        self.board_size = int(board_size)
-        self.game_number = game_number
-        self.board_file = f"data/gameboards/Rushhour{board_size}x{board_size}_{game_number}.csv"
+    def __init__(self, game):
+        # get game variables
+        game_info = game.get_game_info()
+        self.board_size = game_info["board_size"]
+        self.game_number = game_info["game_number"]
+        self.board_file = f"data/gameboards/Rushhour{self.board_size}x{self.board_size}_{self.game_number}.csv"
     
-        self.cars = []
-        self.load_cars(self.board_file)
+        self.cars = game.get_cars()
+        # self.load_cars(self.board_file)
 
-        self.moves = self.create_move_list()
+        self.moves = game.get_move_range()
+
         self.depth = 0
 
         while True:
@@ -22,7 +25,8 @@ class Test_alg_2():
             if self.best_solution:
                 break
             self.depth += 1
-            print(self.depth)
+            print(f"Depth: {self.depth}")
+
 
     def run_children(self, parent_moves, depth):
 
@@ -52,31 +56,8 @@ class Test_alg_2():
                 best_solution = self.run_children(new_parent_moves, depth)
 
                 if best_solution:
-                    print("test")
                     return best_solution
 
-
-
-    def load_cars(self, board_file):    # DIT KAN MISSCHIEN STRAKS WEG OMDAT HET AL IN GAME.PY STAAT
-        """
-        Loads all the car id's from the board file into a list. 
-        Needs the board file name (string) as parameter.
-        """
-
-        with open(board_file) as f:
-            # skip header and read each car into list
-            next(f)
-
-            for line in f:
-                car_line = line.split(",")
-                self.cars.append(car_line[0])
-
-    def create_move_list(self):
-
-        moves = list(range(-(self.board_size - 2), self.board_size - 1))
-        moves.remove(0)
-
-        return moves
 
     def get_command(self):
         command_list = self.best_solution.pop(0)

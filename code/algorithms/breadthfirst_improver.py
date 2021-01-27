@@ -49,9 +49,11 @@ class BreadthFirst_adjusted(BreadthFirst):
         
         # check if shorter solution has been found
         if [new_node.give_board()] in self.boards:
+            # save solution and index
             self.best_solution = new_node.get_moves()
             self.index = self.boards.index([new_node.give_board()])  
         else:
+            # if depth is greater then the max depth, stop adding to queue
             if len(new_node.get_moves()) <= (self.max_depth + self.step_counter):
                 self.add_to_archive(new_node)
 
@@ -82,8 +84,13 @@ class Breadthfirst_improver:
         # improve the solution using breadthfirst
         self.run_improver()
 
+
     def load_solution(self, solution_file):
+        """
+        Loads the solution from the file into a list.
+        """
         with open(solution_file) as f:
+            # skip header
             next(f)
             solution = []
 
@@ -93,8 +100,14 @@ class Breadthfirst_improver:
         
         return solution
 
+
     def make_game_states_list(self, game, solution, depth):
-        # make a list with all the states of the board
+        """
+        Returns the total length of all the game boards found in the initial
+        solution and a shorter list of string represenatations of the game 
+        boards needed for the first depth first search. Parameters:
+        game(Game object), solution(nested list with moves), depth(int).
+        """
         game_for_boards = deepcopy(game)
         game_boards = []
         game_boards.append([game_for_boards.give_board()])
@@ -108,9 +121,12 @@ class Breadthfirst_improver:
 
         return game_boards, game_boards_total_length
 
-    def run_improver(self):
-        # check for every board if there is a route to one of the other boards that is more than the max depth away
 
+    def run_improver(self):
+        """
+        Runs breathfirst on each state and returns if a better solution 
+        has been found or if all the states have been checked.
+        """
         step_counter = 0
 
         while self.game_boards:
@@ -131,7 +147,12 @@ class Breadthfirst_improver:
             self.game.move(*self.solution[step_counter])
             step_counter += 1
 
+
     def get_command(self):
+        """
+        Returns the command to move a car
+        """
         command_list = self.solution.pop(0)
         car, move = command_list[0:2]
+
         return f"{car},{move}"
