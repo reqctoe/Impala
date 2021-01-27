@@ -1,6 +1,6 @@
-from code.classes.game import Game
-
 from copy import deepcopy
+
+from code.classes.game import Game
 
 
 class Iterative_depth_first():

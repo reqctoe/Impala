@@ -1,5 +1,3 @@
-from .tile import Tile
-
 class Car():
     """
     Creates car objects with a location, length and orientation.

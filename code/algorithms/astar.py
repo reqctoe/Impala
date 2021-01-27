@@ -4,6 +4,18 @@ from random import choice
 from .random_repeater import Random_repeater
 from code.classes.game import Game
 
+class Random_repeater_adjusted_Astar(Random_repeater):
+    """
+    Adjusted version of Random_repeater that also returns the game object with
+    the best solution, and not just commands.
+    """
+
+    def get_game(self):
+        """
+        Returns the game object with the best solution
+        """
+        return self.best_game
+
 class AStar:
     """
     Implements an attempt at A* with questionable heuristics.
@@ -12,7 +24,7 @@ class AStar:
     def __init__(self, game):
 
         # create solution with random repeater
-        self.solution = Random_repeater(game, 100).get_game()
+        self.solution = Random_repeater_adjusted_Astar(game, 100).get_game()
         self.max_moves = len(self.solution.get_moves())
         self.game = deepcopy(game)
         self.game_info = self.game.get_game_info()

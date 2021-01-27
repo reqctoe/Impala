@@ -1,7 +1,4 @@
 from .breadth_first import Breadth_first
-from code.classes.game import Game
-
-import copy
 
 
 class Depth_first(Breadth_first):

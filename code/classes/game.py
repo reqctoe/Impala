@@ -11,7 +11,6 @@ class Game():
     """
     
     def __init__(self, board_size, game_number, data = None):
-        
         # game constants
         self.board_size = int(board_size)
         self.game_number = int(game_number)
@@ -47,7 +46,6 @@ class Game():
         """
         Load tiles
         """
-
         # create all tile objects with occupied false
         for row in range(1, self.board_size + 1):
             for col in range(1, self.board_size + 1):
@@ -87,7 +85,6 @@ class Game():
         """
         Create board configuration string
         """
-        
         # check for occupation and create dictionary of occupied tiles
         for car in self.cars:
             # load car attributes
@@ -116,7 +113,6 @@ class Game():
         """
         Checks if the move is valid
         """
-        
         car = self.cars[car_id].car_attributes()
         move = int(move)
         comp = (car["row"] - 1) * self.board_size
@@ -182,7 +178,6 @@ class Game():
         """
         Move a car to a different position
         """
-        
         move = int(move)
         car_info = self.cars[car_id].car_attributes()
 
@@ -251,7 +246,6 @@ class Game():
         """
         Checks if the red car (with id X) is in front of the exit
         """
-        
         if self.winning_tile in self.cars['X'].car_attributes()["tiles"]:
             return True
         return False

@@ -1,0 +1,48 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>535</x><y>480</y><w>260</w><h>180</h></coordinates><panel_attributes>Car
+--
+id: String
+orientation: String
+row: Int
+col: Int
+length: Int
+tiles: List
+--
+occupies_tiles(self, dimension): None
+update_position(self, move, dimension): None
+car_attributes(self): Dict</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>535</x><y>290</y><w>160</w><h>180</h></coordinates><panel_attributes>Tile
+--
+id: Int
+row: Int
+col: Int
+occupied: Bool
+--
+set_occupied(self): None
+set_unoccupied(self): None
+get_occupied(self): Bool
+tile_attributes(self): Dict
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>110</x><y>290</y><w>210</w><h>350</h></coordinates><panel_attributes>Game
+--
+board_size: Int
+game_number: Int
+winning_tile: Int
+board: List
+tiles: Dict
+tile_occupation: Dict
+cars: Dict
+car_ids: List
+data: List
+moves: List
+--
+load_tiles(self): None
+load_cars(self, board_file): None
+current_board(self): None
+valid_move(self, car_id, move): Bool
+move(self, car_id, move): None
+get_game_info(self): Dict
+get_cars(self): List
+get_moves(self): List
+get_move_range(self): List
+give_board(self): String
+game_won(self): Bool</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>310</x><y>510</y><w>240</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1..n</panel_attributes><additional_attributes>10;10;220;10</additional_attributes></element><element><id>Relation</id><coordinates><x>310</x><y>330</y><w>240</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1..n</panel_attributes><additional_attributes>10;10;220;10</additional_attributes></element></diagram>

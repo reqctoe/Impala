@@ -82,13 +82,6 @@ class Random_repeater():
                 return solution
 
 
-    def get_game(self): # NAAR A*
-        """
-        Returns the game object with the best solution
-        """
-        return self.best_game
-
-
     def get_command(self):
         """
         Returns the command to move a car
