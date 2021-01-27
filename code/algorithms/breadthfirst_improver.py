@@ -6,10 +6,10 @@ from code.classes.game import Game
 # con
 class BreadthFirst_adjusted(Breadth_first):
     """
-        This class inherits from the breadthfirst algorithm and contains some
-        adjustments to make it suitable to improve an existing solution with
-        the Breadthfirst_improver algorithm. Parameters: game(Game object), 
-        boards(list of strings), max_depth(int), step_counter(int).
+    This class inherits from the breadthfirst algorithm and contains some
+    adjustments to make it suitable to improve an existing solution with
+    the Breadthfirst_improver algorithm. Parameters: game(Game object), 
+    boards(list of strings), max_depth(int), step_counter(int).
     """
 
     def __init__(self, game, boards, max_depth, step_counter):
@@ -35,10 +35,10 @@ class BreadthFirst_adjusted(Breadth_first):
 
     def build_child(self, game_node, car, move):
         """
-            Performs a move and checks if it results in a board that is present
-            further on in the solution. If it is, the solution and the index of 
-            the board further on in the solution are saved. 
-            Parameters: game_node(Game object), car(string), move(int).
+        Performs a move and checks if it results in a board that is present
+        further on in the solution. If it is, the solution and the index of 
+        the board further on in the solution are saved. 
+        Parameters: game_node(Game object), car(string), move(int).
         """
         # make new state and perform move
         new_node = Game(self.game.board_size, self.game.game_number, deepcopy(self.get_node_data(game_node)))
