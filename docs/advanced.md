@@ -1,11 +1,21 @@
 # Advanced
 
-There are quite a few things that make a Rush Hour game harder or easier.
+There are a few things that can make a Rush Hour game easier or more difficult.
 
-More cars in total does not necessarily mean that it is a harder game. An example of this is game 2 and game 3. Both are 6x6, game 2 has 12  cars and 1 trucks, and game 4 has 6 cars and 3 trucks. However, game 2 can be solved in 15 moves, while game 3 needs 33 moves. 
+When considering horizontal vs vertical cars, both categories individually do not obstruct car X from moving to the exit. It is only when both vertical and horizontal cars are present that complications occur. 
+Therefore, a larger amount of cars in the game does not necessarily mean it is more difficult to solve. An example of this is game 2 and 3. Both are 6x6 boards; game 2 has 12 cars and 1 truck, while game 3 has 6 cars and 3 trucks. However, game 2 can be solved in 15 moves, while game 3 needs 33 moves. 
 
-More trucks does make a game harder, as they are harder to move and get around.
+This gap in difficulty can also be attributed to the amount of cars vs. trucks. Since trucks are larger, they obstruct significantly more movement than cars do. They probably have the biggest influence on difficulty for a 6x6 board as they cover half the board length.
 
-What also seems to affect the difficulty is the ratio between horizontal and vertical cars. A higher ratio between these means that there are more opportunities for cars to cross eachother or get in eachothers way, which makes solving the game harder.
+What also likely affects the difficulty of a game is the ratio between horizontal and vertical cars. As mentioned before, only when they are both present do they form an obstruction. This means that in order to make a game more complex, a 50:50 ratio of the two is ideal. 
+When considering games 1 and 2, their H:V ratios are 7:5 and 8:4 respectively. The amount of cars and trucks in both games are exactly the same, but in line with the aforementioned, game 1 can be solved in 21 moves and game 2 in 15. 
 
-For some games, a really specific sequence is needed as part of the solution. This makes them harder.
+This pattern can also be recognized when comparing the 9x9 boards as can be sen in the table below
+
+| Game  | H:V ratio | Solution length  |
+| ----- |-----------| -----------------|
+| 4     | 10:11     | 27               |
+| 5     | 11:12     | 27               |
+| 6     | 14:11     | 22               |
+
+The solutions for games 5 and 6 are not guaranteed optimal since they were not produced by the breadth first algorithm alone, but they are likely a quite good approximation.

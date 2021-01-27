@@ -53,9 +53,9 @@ With this algorithm we found solutions for the first 4 games and because of the 
 
 ### 4 - Depth first with breadth first heuristics
 
-
-
-
+The only difference between our breadth first and depth first algorithms is the use of a stack vs a queue. Therefore, only get_next_state is present in depth_first.py. 
+The algorithm stops as soon as it has found a solution since it inherits this from breadth first. It also does not record at which depth it encounters a state, leading to incorrect pruning.
+However, we quickly realised this algorithm would not yield much better results than breadth first and did not pursue it any further, leaving the heuristics not entirely correct.
 
 ### 5 - Random Repeater
 The Random Repeater algorithm is an addition to the Random algorithm. It also executes random moves until the game is won. This is repeated x times, specified by the user. If a shorter solution is found, it will save that. If the number of moves gets higher than the current best solution, the algorithm will stop and go to the next iteration. 
@@ -68,20 +68,21 @@ The Random Loopcutter algorithm is an addition to Random Repeater. It uses Rando
 The results generated with this algorithm strongly depend on the solution found with Random Repeater. Sometimes it can bring down the amount of moves a lot, and sometimes it cannot cut any moves. Generally though, the results are better than those of Random Repeater, but still not near as good as the (optimal) results of breadth first. 
 
 ### 7 - A*
-This algorithm uses our random loop cutter to generate a board in a winning state. This board is then used for the heuristics of A*. 
+The heuristics of A* require you to define what constitutes improvement in the state of the game. For Rush Hour, this is quite difficult to define. Our version of the algorithm uses random loop cutter to generate a board in a winning state. This board is then used for the heuristics of A*. Costs consist of the amount of moves performed and the displacement of all cars compared to their winning state counterparts. This score is then used to calculate the “optimal” next move. 
+However, this is not guaranteed to be the optimal move as it might be necessary to move cars to and from their final location multiple times, but once it has reached the desired spot, it is unlikely to be moved again. 
+Therefore, the algorithm is likely to get stuck in a loop of moves that it deems the optimal next state without branching out to moves it considers less ideal. To prevent this, an archive was made of all visited states which the algorithm was not allowed to return to. However, this led to it getting stuck in certain states where the only possible moves were to states already visited. 
+We also added a heuristic for the algorithm to be interrupted if it exceeded the amount of moves random had used. When this happened, the loop cutter was used to shorten the current list of moves. Since the algorithm is deterministic, a random move was then performed to encourage diversification. Sadly, this was not enough so the amount of random moves performed was incremented by one every time it passed this point. Though this yielded some solutions, they were rarely of reasonable length. 
 
-Costs consist of the amount of moves performed and the displacement of all cars compared to their winning state counterparts. This score is then used to calculate the “optimal” next move. 
+All obstacles encountered could technically be worked around but ultimately we deemed it too much work for the time available. Additionally, since the cost calculations were not a guarantee for progression, the results were unlikely to be worth the effort. Therefore, we focused our efforts on our next algorithm.
 
-However, this is not guaranteed to be the optimal move as it might be necessary to move cars to and from their final location multiple times. 
-Therefore, the algorithm is likely to get stuck in a loop of moves that the algorithm deems the optimal next state without 
 
 ### 8 - Breadthfirst improver
-This algorithm uses the breadth first algorithm we wrote earlier to improve upon a solution that has been found with another algorithm (such as random loopcutter). It applies the breadth first algorithm with a specified depth to each state that the initial solution passes through. The breadth first algorithm searches all possible states with the moves it can do within its maximum depth and compares these states with states further on in the initial solution. If a state matches, it means that a shorter path to that state has been found. The algorithm replaces the longer solution with the shorter solution and returns it.
+This algorithm uses our breadth first algorithm to improve upon a solution that has been found with another algorithm (such as random loopcutter). It applies the breadth first algorithm with a specified depth to each state that the initial solution passes through. The breadth first algorithm searches all possible states within its maximum depth and compares them with states further on in the initial solution. If one matches, it means that a shorter path to that state has been found. The algorithm replaces the longer solution with the shorter one and returns it.
 
-This algorithm turned out to be very effective for improving the larger game boards that could not be solved with the standard breadth first algorithm.
+This algorithm turned out to be very effective for improving the larger game boards that could not be solved with the standard breadth first algorithm. We ran the code using the shortest solution found by random loopcutter and strongly suspect to have found the shortest solution for both boards 5 and 6 at 27 and 22 moves respectively. Sadly, we will never know for sure as we are not able to run it through breadth first entirely and the winning board provided by random loopcutter might not be the ideal one. Since the algorithm makes it impossible to change the final state, an ideal solution is not guaranteed. 
 
 ## Advanced
-When running the code, you also get the option to generate your own game board. All boards generated with this are solvable. However, especially the 6x6 boards are really easy most of the time and can often be solved in 10 moves or less.
+When running the code, you also get the option to generate your own game board. All boards generated with this are solvable. However, especially the 6x6 boards are very easy most of the time and can often be solved in 10 moves or less.
 
 Our insights into what makes a Rush Hour game harder or easier can be found in **/docs/advanced**.
 
