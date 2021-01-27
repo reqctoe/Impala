@@ -26,7 +26,7 @@ The list below describes the most important folders from the project:
   - **/code/classes**: contains three classes for the game representation
 - **/data**: contains all data files for generating games as well as solutions
   - **/data/gameboards**: contains data files for starting positions of the games
-  - **/data/output_files**: contains all solutions, ordered by algorithm 
+  - **/data/output_files**: contains the best solutions found by each algorithm in their respective folders 
 - **/docs**: contains files displaying the data structure of the representation of a Rush Hour game and the advanced assignment
 
 ## Algorithms
