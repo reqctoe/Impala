@@ -1,3 +1,9 @@
+"""
+This file is used to run a Rushhour game. It loads the correct game file and solves
+it using the algorithm specified by the user. 
+"""
+
+# importing all algorithms
 from code.algorithms.random import Random
 from code.algorithms.random_repeater import Random_repeater
 from code.algorithms.test_alg_2 import Test_alg_2
@@ -31,19 +37,16 @@ if __name__ == "__main__":
         print("Invalid board size")
         exit(1)
 
-    # OM NIEUW BORD TE GENEREREN, NOG BESPREKEN HOE WE DIT WILLEN DOEN
+    # generate a new gameboard
     print("Do you want to generate a random new board?")
     answer = input("> ")
 
-    board_size = None
-    game_number = None
-    game = None
+    # if the user wants to generate a new gameboard file, ask for the size and number
     if answer == 'yes' or answer == 'y':
         print("What size board do you want?") 
         board_size = input("> ")
-        print("What is the number of the game?") # NIET NUMMER WAT AL BESTAAT
+        print("What is the number of the game?")
         game_number = input("> ")
-
 
         while True:
             if int(game_number) not in range(1,8):
@@ -51,9 +54,10 @@ if __name__ == "__main__":
             print("A game with that number already exists\nPlease enter a new number")
             game_number = input("> ")
         
-        # generate a new gameboard file if the user want to generate a random new board
+        # generate a new gameboard file
         GenerateBoard(board_size, game_number)
     
+        # load game
         game = Game(board_size, game_number)
         print(game.give_board())
     else:
@@ -63,14 +67,14 @@ if __name__ == "__main__":
     
     # ask user what algorithm they want to run
     print("Type the number of the algorithm that you want to run")
-    print("1 random: Fills in random numbers")
-    print("2 random repeater: tries to fill in random numbers and r")
+    print("1 random: Fills in random moves")
+    print("2 random repeater: tries to fill in random moves to win the game repeatedly")
     print("3 test alg 2: breadth first without heuristics")
     print("4 breadth first: breadth first with dictionary heuristic")
     print("5 depth first: depth first")
     print("6 random loopcutter: removes loops from random solution")
-    print("7 a star: random combined with a star")
-    print("8 breadthfirst improver: improves an existing output with breadthfirst")
+    print("7 A*: random combined with A*")
+    print("8 breadthfirst improver: improves an existing solution with breadthfirst")
 
 
     # keep asking for input until an algorithm is loaded
@@ -118,11 +122,6 @@ if __name__ == "__main__":
 
     print(" " + game.give_board())
     
-    """
-    deze doet nu nog allemaal checks die niet nodig zijn aangezien hij 
-    alleen solutions aangereikt krijgt 
-    """
-
     # ask algorithm for input
     while True:
         command_string = algorithm.get_command()
@@ -130,15 +129,12 @@ if __name__ == "__main__":
         
         # update output string and perform move
         command_list += f"{command_string}\n"
-        # print(game.give_board())
         command = command_string.split(",")
         game.move(*command)
 
-
-       
         # exit when game is won
         if game.game_won():
-            # print final gameboard state and total number of input and valid moves
+            # print final gameboard state and total number of moves
             print(" "+game.give_board())
             print(command_count)
             print("Congratulations, you have won the game!")
