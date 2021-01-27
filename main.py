@@ -17,6 +17,7 @@ from code.generate_board import GenerateBoard
 from code.classes.game import Game
 
 import csv
+import os
 from sys import argv
 
 
@@ -27,6 +28,9 @@ if __name__ == "__main__":
         print("Usage: python main.py [game_number] [board_size]")
         exit(1)
     
+    """
+    dit kan denk ik weg, omdat je meerdere bord nummers kunt hebben
+    """
     # check game number
     # if int(argv[1]) not in range(1, 8):
     #     print("Invalid game number")
@@ -37,29 +41,29 @@ if __name__ == "__main__":
         print("Invalid board size")
         exit(1)
 
-    # generate a new gameboard
     print("Do you want to generate a random new board?")
     answer = input("> ")
-
-    # if the user wants to generate a new gameboard file, ask for the size and number
+    
+    # generate a new gameboard
     if answer == 'yes' or answer == 'y':
-        print("What size board do you want?") 
-        board_size = input("> ")
-        print("What is the number of the game?")
-        game_number = input("> ")
-
-        while True:
-            if int(game_number) not in range(1,8):
+        # ask user for board size
+        while True:    
+            print("What size board do you want?") 
+            board_size = input("> ")
+            if int(board_size) in [6, 9, 12]:
                 break
-            print("A game with that number already exists\nPlease enter a new number")
-            game_number = input("> ")
+            print("Invalid board size. Board size can be either 6, 9 or 12")
+
+        # get game number
+        for root, dirs, files in os.walk("data/gameboards"):
+            game_number = len(files) + 1
+            print(game_number)
         
         # generate a new gameboard file
         GenerateBoard(board_size, game_number)
     
         # load game
         game = Game(board_size, game_number)
-        print(game.give_board())
     else:
         # load game
         game_number, board_size = argv[1], argv[2]
