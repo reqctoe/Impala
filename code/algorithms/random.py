@@ -11,7 +11,9 @@ class Random():
     def __init__(self, game):
         # game variables
         self.game = deepcopy(game)
-        self.board_size = game.board_size
+        game_info = game.get_game_info()
+        self.board_size = game_info["board_size"]
+        self.game_number = game_info["game_number"]
         self.cars = game.get_cars()
         self.move_range = game.get_move_range()
 

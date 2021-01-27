@@ -3,9 +3,6 @@ from copy import deepcopy
 from code.algorithms.breadth_first import Breadth_first
 from code.classes.game import Game
 
-# constants
-MAX_DEPTH = 3
-
 
 class BreadthFirst_adjusted(Breadth_first):
     """
@@ -70,10 +67,10 @@ class Breadthfirst_improver:
     Parameter: game(Game object).
     """
 
-    def __init__(self, game):
+    def __init__(self, game, max_depth, solution_file):
         self.game = deepcopy(game)
-        self.solution_file = "data/output_files/output.csv"
-        self.max_depth = MAX_DEPTH
+        self.max_depth = max_depth
+        self.solution_file = solution_file
 
         # load solution that needs to be improved from file
         self.solution = self.load_solution(self.solution_file)

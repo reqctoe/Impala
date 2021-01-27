@@ -14,7 +14,7 @@ from code.algorithms.astar import AStar
 from code.algorithms.breadthfirst_improver import Breadthfirst_improver
 
 from code.classes.game import Game
-from code.generate_board import GenerateBoard
+from code.advanced.generate_board import GenerateBoard
 
 import csv
 import os
@@ -22,17 +22,6 @@ from sys import argv
 
 
 if __name__ == "__main__":
-
-    # check if command line arguments are given
-    if len(argv) != 3:
-        print("Usage: python main.py [game_number] [board_size]")
-        exit(1)
-
-    # check board size
-    if int(argv[2]) not in [6, 9, 12]:
-        print("Invalid board size")
-        exit(1)
-
     print("Do you want to generate a random new board?")
     answer = input("> ")
     
@@ -49,24 +38,40 @@ if __name__ == "__main__":
         # get game number
         for root, dirs, files in os.walk("data/gameboards"):
             game_number = len(files) + 1
-            print(game_number)
+            print(f"Game number: {game_number}")
         
         # generate a new gameboard file
         GenerateBoard(board_size, game_number)
     
         # load game
         game = Game(board_size, game_number)
+    # load existing gameboard
     else:
+        # get board size
+        while True:    
+            print("What size board do you want?") 
+            board_size = input("> ")
+            if int(board_size) in [6, 9, 12]:
+                break
+            print("Invalid board size. Board size can be either 6, 9 or 12")
+        
+        # get game number
+        print("What game do you want to play?")
+        game_number = input("> ")
+
         # load game
-        game_number, board_size = argv[1], argv[2]
-        game = Game(board_size, game_number)
+        try:
+            game = Game(board_size, game_number)
+        except:
+            print("That game does not exist")
+            exit(1)
     
     # ask user what algorithm they want to run
     print("Type the number of the algorithm that you want to run")
-    print("1 random: Fills in random moves")
+    print("1 random: find a solution by performing random moves")
     print("2 breadth first recursive: breadth first without heuristics")
     print("3 breadth first: breadth first with dictionary heuristic")
-    print("4 depth first: depth first")                         # HIER MOET MISSCHIEN NOG WAT AANGEVULD
+    print("4 depth first: finds the first solution using depth first")
     print("5 random repeater: tries to fill in random moves to win the game repeatedly")
     print("6 random loopcutter: removes loops from random solution")
     print("7 A*: random combined with A*")
@@ -93,13 +98,22 @@ if __name__ == "__main__":
         elif algorithm_number == 4:
             algorithm = Depth_first(game)
         elif algorithm_number == 5:
-            algorithm = Random_repeater(game)
+            # ask the user how many times it should be repeated
+            print("How many times do you want to repeat the random algorithm?")
+            repeated = input("> ")
+            algorithm = Random_repeater(game, repeated)
         elif algorithm_number == 6:
             algorithm = Random_loopcutter(game)
         elif algorithm_number == 7:
-            algorithm = AStar(board_size, game_number)
+            algorithm = AStar(game)
         elif algorithm_number == 8:
-            algorithm = Breadthfirst_improver(game)
+            # get the max depth and the file location of the solution
+            print("What depth do you want to use for the breadth first improver?")
+            max_depth = input("> ")
+            print("What is the relative file location of the solution you want to improve?")
+            print("Example: data/output_files/output.csv")
+            solution_file = input("> ")
+            algorithm = Breadthfirst_improver(game, max_depth, solution_file)
         else:
             print("Invalid algorithm number")
             continue

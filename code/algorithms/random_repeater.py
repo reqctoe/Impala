@@ -10,12 +10,15 @@ class Random_repeater():
     becomes longer than the best solution. Parameters for initialisation: game (Game object).
     """
     
-    def __init__(self, game):
+    def __init__(self, game, repeated):
         # game variables
-        self.board_size = game.board_size
-        self.game_number = game.game_number
-        self.cars = game.car_ids # AANPASSEN
+        game_info = game.get_game_info()
+        self.board_size = game_info["board_size"]
+        self.game_number = game_info["game_number"]
+        self.cars = game.get_cars()
         self.move_range = game.get_move_range()
+
+        self.repeated = repeated	
         
         # initialize best solution
         self.best_solution = []
@@ -28,7 +31,7 @@ class Random_repeater():
         """
         Tries n times to find a solution that is as short as possible
         """
-        for i in range(1000): # WILLEN WE DIT ALS ARGUMENT MEEGEVEN? (command line in main)
+        for i in range(self.repeated):
             self.game = Game(self.board_size, self.game_number)
             # try to generate a shorter solution
             new_solution = self.create_solution()
