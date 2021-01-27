@@ -20,8 +20,11 @@ class BreadthFirst:
         self.move_range = self.game.get_move_range()
         self.cars = self.game.get_cars()
 
-        self.best_solution = None
+        # step counter for breadthfirst improver
+        self.step_counter = 0
 
+        # run breadthfirst
+        self.best_solution = None
         self.create_solution()
 
 
@@ -35,9 +38,9 @@ class BreadthFirst:
             self.states[game.give_board()] = self.get_node_data(game)
 
 
-    def create_solution(self, max_depth=None, step_counter=0): 
+    def create_solution(self): 
         """
-              erin zetten dat md en sc voor de improver zijn
+        
         """
         count = 0
 
@@ -45,10 +48,10 @@ class BreadthFirst:
             count += 1
             new_state_data = self.get_next_state()
 
-            # stop if max depth has been reached
-            if max_depth:
-                if len(new_state_data[1]) > (max_depth + step_counter):
-                    break
+            # # stop if max depth has been reached
+            # if max_depth:
+            #     if len(new_state_data[1]) > (max_depth + step_counter):
+            #         break
 
             # create game node
             game_node = Game(self.game.board_size, self.game.game_number, new_state_data)
@@ -57,7 +60,7 @@ class BreadthFirst:
             # regularly print current depth
             if count % 100 == 0:
                 # if used in breadthfirst improver, subtract number of steps taken
-                print(f"Depth:{(len(new_state_data[1]) - step_counter)}")
+                print(f"Depth:{(len(new_state_data[1]) - self.step_counter)}")
 
             # check all cars
             for car in self.cars:

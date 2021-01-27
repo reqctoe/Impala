@@ -33,7 +33,7 @@ class BreadthFirst_adjusted(BreadthFirst):
         self.index = None
         self.best_solution = None
 
-        self.create_solution(self.max_depth, self.step_counter)
+        self.create_solution()
 
 
     def build_child(self, game_node, car, move):
@@ -52,16 +52,22 @@ class BreadthFirst_adjusted(BreadthFirst):
             self.best_solution = new_node.get_moves()
             self.index = self.boards.index([new_node.give_board()])  
         else:
-            # print(new_node.get_moves())
-            if len(new_node.get_moves()) < (self.max_depth + self.step_counter):
-                # print(new_node.get_moves())
+            if len(new_node.get_moves()) <= (self.max_depth + self.step_counter):
                 self.add_to_archive(new_node)
 
     def give_solution(self):
         return self.best_solution, self.index
 
 class Breadthfirst_improver:
-    
+    """
+    This class implemants an algorithm that improves an existing solution with
+    the breathfirst algorithm. It applies a complete breadthfirst search with a 
+    specified maximum depth to each state(game board configuration) in the 
+    initial solution. If it finds a state that is further away than the maximum
+    depth, a shorter solution has been found and will be returned.
+    Parameter: game(Game object).
+    """
+
     def __init__(self, game):
         self.game = deepcopy(game)
         self.solution_file = "data/output_files/output.csv"
@@ -110,7 +116,7 @@ class Breadthfirst_improver:
         while self.game_boards:
             
             print(f"Checking board {step_counter + 1}")
-            print(f"Remaining game board length: {len(self.game_boards)}")
+            print(f"Boards remaining: {len(self.game_boards)}")
 
             # run breadthfirst
             breadthfirst = BreadthFirst_adjusted(self.game, self.game_boards, self.max_depth, step_counter)
