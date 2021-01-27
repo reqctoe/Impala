@@ -11,20 +11,19 @@ class AStar:
         # create solution with random repeater
         self.solution = Random_repeater(board_size, game_number).get_game()
         self.max_moves = len(self.solution.get_moves())
-        self.board = Game(board_size, game_number)
+        self.game = Game(board_size, game_number)
 
         # archive
         self.states = {}
-        self.add_to_archive(self.board)
+        self.add_to_archive(self.game)
 
         # game properties
-        self.move_range = self.board.get_move_range()
-        self.cars = self.board.get_cars()
+        self.move_range = self.game.get_move_range()
+        self.cars = self.game.get_cars()
         self.best_solution = None
-        self.restart = 0
 
         # calculate score of starting board
-        self.score = self.calculate_score(self.board)
+        self.score = self.calculate_score(self.game)
 
         self.shorten_solution()
 
@@ -59,86 +58,89 @@ class AStar:
         Check whether more moves have been performed than in the random solution. 
         If too long, perform loop cutter and continue searching.
         """
-        if len(self.board.get_moves()) >= self.max_moves:
-            # print 
-            self.restart += 1
-            print(f"Length checks performed: {self.restart}")
+        if len(self.game.get_moves()) >= self.max_moves:
 
-            # perform loop cutter, create new game and perform 
-            new_moves = self.remove_loops(self.board.get_moves())
-            self.board = Game(self.solution.board_size, self.solution.game_number)
+            # perform loop cutter, create new game and perform remaining moves
+            new_moves = self.remove_loops(self.game.get_moves())
+            self.game = Game(self.solution.game_size, self.solution.game_number)
             for move in new_moves:
-                self.board.move(*move)
+                self.game.move(*move)
             
-            
+            # perform random moves for every restart
             for i in range(self.restart):
                 while True:
                     car = choice(self.cars)
                     move = choice(self.move_range)
-                    if self.board.valid_move(car, move):
-                        self.board.move(car, move)
+                    if self.game.valid_move(car, move):
+                        self.game.move(car, move)
                         break
 
 
     def shorten_solution(self):
-        # restart = 0
+        """
+        Tries to find shorter solution 
+        """
         while True:
             best_score = float('inf')
             ni_score = float('inf')
             best_move = None
             valid_moves = 0
 
-
-            # already_tried = False
-            
+            # iterate through all moves and check if maximum length has been exceeded
             for car in self.cars: 
                 for i in self.move_range:
                     self.check_length()
+                    
                     # check if the move is valid/possible
-                    if self.board.valid_move(car, i):
+                    if self.game.valid_move(car, i):
                         valid_moves += 1
-                        if self.board.get_moves() and [car,-i] == self.board.get_moves()[-1]:
+
+                        # if previous move performed with this car, skip it
+                        if self.game.get_moves() and car == self.game.get_moves()[-1][0]:
                             continue
-                        new_board = Game(self.solution.board_size, self.solution.game_number, deepcopy(self.get_node_data(self.board)))
+                        
+                        # make new game and check if move improves score
+                        new_board = Game(self.solution.game_size, self.solution.game_number, deepcopy(self.get_node_data(self.game)))
                         new_board.move(car, i)
-                        # if new_board.give_board() in self.states:
-                        #    continue
                         new_score = self.calculate_score(new_board)
                         
+                        # save move if it improves score
                         if new_score < best_score and new_board.give_board() not in self.states:
                             print(new_score, best_score)
                             best_score = new_score
-                            best_move = [car, i]    
+                            best_move = [car, i]
+                        # save move with lowest score from this round    
                         elif new_score < ni_score and new_board.give_board() in self.states:
-                            # print("new repeat move found")
                             ni_score = new_score
                             ni_move = [car, i]
-                            
+
+            # perform best move          
             if best_move:
-                # self.score = best_score
-                self.board.move(*best_move)
-                self.add_to_archive(self.board)
-                # print(self.board.get_moves())
-                # print(self.board.give_board())
-                # input()
+                self.game.move(*best_move)
+                self.add_to_archive(self.game)
 
                 if new_board.game_won():
-                    self.best_solution = self.board.get_moves()
-                    # print(len(self.best_solution))
-                    # print(self.best_solution)
+                    self.best_solution = self.game.get_moves()
                 
                 if self.best_solution != None:
                     break
+            # go back to previous board if it is the only move possible
             elif valid_moves == 1:
-                back_track = self.board.get_moves(self.board)[-1]
-                self.board.move(*back_track)
+                back_track = self.game.get_moves(self.game)[-1]
+                self.game.move(*back_track)
                 print("backtracked")
+            # perform non-ideal move with lowest score
             else:
-                self.board.move(*ni_move)
+                self.game.move(*ni_move)
 
             
     def remove_loops(self, moves):
-        game = Game(self.solution.board_size, self.solution.game_number)
+        """
+        Checks for double board configurations in current moves.
+        If found, removes all moves in between.
+        """
+        # recreate current game and perform all moves while saving board configurations
+        game = Game(self.solution.game_size, self.solution.game_number)
         game_boards = []
         game_boards.append(game.give_board())
 
@@ -168,6 +170,9 @@ class AStar:
 
 
     def add_to_archive(self, game):
+        """
+        Creates archive of previously encountered board configurations.
+        """
         if game.give_board() not in self.states:
             self.states[game.give_board()] = self.get_node_data(game)
 
@@ -180,13 +185,16 @@ class AStar:
         for car_id in game_node.cars:
             car = game_node.cars[car_id]
             info.append(f"{car.id},{car.orientation},{car.col},{car.row},{car.length}")
-
         moves = game_node.get_moves()
+
         return [info, moves]
 
     
     def get_command(self):
-        print(self.max_moves, self.restart)
+        """
+        One by one, return moves from obtained solution to main.
+        """
         command_list = self.best_solution.pop(0)
         car, move = command_list[0:2]
+
         return f"{car},{move}"
