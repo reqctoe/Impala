@@ -29,7 +29,7 @@ class Random_loopcutter():
         self.game = deepcopy(game)
 
         # get solution to start with using Random_repeater
-        self.random_repeater = Random_repeater_adjusted(self.game)
+        self.random_repeater = Random_repeater_adjusted(self.game, 1000)
         self.solution = self.random_repeater.get_solution()
 
         # cut loops

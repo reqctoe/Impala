@@ -18,7 +18,7 @@ class Random_repeater():
         self.cars = game.get_cars()
         self.move_range = game.get_move_range()
 
-        self.repeated = repeated	
+        self.repeated = int(repeated)
         
         # initialize best solution
         self.best_solution = []
