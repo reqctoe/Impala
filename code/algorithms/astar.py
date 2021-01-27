@@ -85,7 +85,7 @@ class AStar:
                 self.game.move(*move)
             
             # perform random moves for every restart
-            for i in range(self.cut_count):
+            for i in range(self.cut_count ):
                 while True:
                     car = choice(self.cars)
                     move = choice(self.move_range)
