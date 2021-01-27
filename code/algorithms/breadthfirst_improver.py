@@ -105,14 +105,18 @@ class Breadthfirst_improver:
         boards needed for the first depth first search. Parameters:
         game(Game object), solution(nested list with moves), depth(int).
         """
+        
+        # initialise game and boards list
         game_for_boards = deepcopy(game)
         game_boards = []
         game_boards.append([game_for_boards.give_board()])
 
+        # add boards to list
         for move in solution:
             game_for_boards.move(*move)
             game_boards.append([game_for_boards.give_board()])
 
+        # save total length and prepare list for first iteration
         game_boards_total_length = len(game_boards)
         game_boards = game_boards[depth + 2:]
 
