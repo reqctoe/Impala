@@ -4,6 +4,11 @@ from .car import Car
 from math import ceil, floor
 
 class Game():
+    """
+    This class implements a game of Rush Hour with predetermined board size.
+    It can create tile and car objects with winning condition. 
+    Moves can be checked for validity and then performed.   
+    """
     
     def __init__(self, board_size, game_number, data = None):
         
@@ -175,7 +180,7 @@ class Game():
 
     def move(self, car_id, move):
         """
-        Move a car to a different possition
+        Move a car to a different position
         """
         
         move = int(move)

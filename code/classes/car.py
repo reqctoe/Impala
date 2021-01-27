@@ -1,6 +1,10 @@
 from .tile import Tile
 
 class Car():
+    """
+    Creates car objects with a location, length and orientation.
+    Parameter: car ID (int)
+    """
     
     def __init__(self, car_ID, orientation, col, row, length):
 

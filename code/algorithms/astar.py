@@ -5,13 +5,16 @@ from .random_repeater import Random_repeater
 from code.classes.game import Game
 
 class AStar:
+    """
+    Implements an attempt at A* with questionable heuristics.
+    """
 
-    def __init__(self, board_size, game_number):
+    def __init__(self, game):
 
         # create solution with random repeater
         self.solution = Random_repeater(board_size, game_number).get_game()
         self.max_moves = len(self.solution.get_moves())
-        self.game = Game(board_size, game_number)
+        self.game = deepcopy(game)
 
         # archive
         self.states = {}
